@@ -2,17 +2,16 @@
 
 class Database{
 
-	static private $host = "localhost";
-	static private $name = "JMessanger";
-	static private $username = "JMAdmin";//inserire username database
-	static private $password ="admin";//inserire password database
-		   protected $pdo;
-		   private $error;
+	private $host = "localhost";
+	private $name = "GestioneIscrizioni";
+	private $username = "Gestore";//inserire username database
+	private $password ="admin123";//inserire password database
+	protected $pdo;
 
 
 	 function connect(){
 		try{
-			$this->pdo = new PDO("mysql:host=".self::$host.";dbname=".self::$name,self::$username,self::$password);
+			$this->pdo = new PDO("mysql:host=".$this->host.";dbname=".$this->name,$this->username,$this->password);
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			$this->pdo->exec('SET NAMES "utf8"');
 		}catch(PDOException $e){
@@ -22,25 +21,56 @@ class Database{
 		return true;
 	}
 
-	function getError(){
-		return $this->error;
-	}
-
-	function auth($username, $password){
-			$password = hash("sha512",$password);
-			$username = mysql_real_escape_string($username);
+	function authAlunno($username, $password){
+			$sql = "SELECT * FROM Alunni A INNER JOIN Login L ON A.cod_matricola = L.cod_matricola WHERE A.cod_matricola = :username and L.pass = :password";
+			//$password = hash("sha512",$password);
+			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
-				$stmt = $this->pdo->prepare(
-					"SELECT * FROM Alunni A INNER JOIN Login L ON A.cod_matricola = L.cod_matricola WHERE A.cod_matricola = :username and L.password = :password");
+				$stmt = $this->pdo->prepare($sql);
 				$stmt->bindValue(":username",$username);
 				$stmt->bindValue(":password",$password);
-				$result = $stmt->exec();
+				$result = $stmt->execute();
 		}catch(PDOException $e){
 				echo "An Error Occured ".$e->getMessage();
 				die();
 		}
+		if($result > 0){
+			while($row = $stmt->fetch()){
+				 $user = array(
+				 	'cod_matricola' => $row['Cod_matricola'],
+				 	'name' => $row['Nome'],
+					'surname' => $row['Cognome']
+				 	);
+			}
+			return $user;
+		}
+	}
 
-		return $result;
+	function AuthAmministratore($username, $password){
+
+		$sql = "SELECT * FROM Amministratore A INNER JOIN Login L ON A.id = L.cod_matricola WHERE A.username = :username and L.pass = :password";
+			//$password = hash("sha512",$password);
+			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username",$username);
+				$stmt->bindValue(":password",$password);
+				$result = $stmt->execute();
+		}catch(PDOException $e){
+				echo "An Error Occured ".$e->getMessage();
+				die();
+		}
+		if($result > 0){
+			while($row = $stmt->fetch()){
+				$user[] = array(
+					'id' => $row['id'],
+					'name' => $row['name'],
+					'surname' => $row['surname']
+					);
+				return $user;
+			}
+		}
+
 	}
 
 }

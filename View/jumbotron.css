@@ -1,0 +1,133 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+#corsiForm {
+	width: 100%;
+	height: auto;
+	padding-bottom: 10px;
+}
+
+#listeCorsi {
+	list-style-type: none;
+}
+
+#formUno {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	float: left;
+	width: 30%;
+}
+
+#formDue {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	float: left;
+	width: 30%;
+}
+
+#formTre {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	float: left;
+	width: 30%;
+}
+
+a {
+	font-size: 30px;
+}
+
+#loginForm {
+	width: 80%;
+	height: 300px;
+	padding-bottom: 10px;
+	float: center;
+}
+
+#loginAlunno {
+	padding-left: 10px;
+	padding-right: 10px;
+	float: left;
+	width: 40%;
+}
+
+#loginDocente {
+	padding-left: 10px;
+	padding-right: 10px;
+	float: left;
+	width: 40%;
+}
+
+@media(max-width: 767px){
+
+#formUno {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	float: left;
+	width: 200px;
+}
+
+#formDue {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	float: left;
+	width: 200px;
+}
+
+#formTre {
+	background-color: white; 
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	float: left;
+	width: 200px;
+}
+
+#loginAlunno {
+	border-style: ;
+	border:2px solid white;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+#loginDocente {
+	border:2px solid white;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 100%;
+}
+	a {
+		font-size: 40px;
+	}
+	#textNavBar{
+		font-size: 15px;
+	}
+	#formUno {
+		float: none;
+	}
+
+	#formDue {
+		float: none;
+	}
+
+	#formTre {
+		float: none;
+	}
+}
