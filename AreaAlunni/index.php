@@ -1,5 +1,6 @@
 <?php
-  session_start();
+include '../Helpers/secure_session.php';
+  session_secure_start();
 
   if(isset($_GET["logout"])){
     $_SESSION = array();
