@@ -8,8 +8,8 @@ Classe varchar(255) not null
 CREATE TABLE Corsi(
 id_corso int not null auto_increment primary key,
 Descrizione varchar(255) not null,
-ora_inizio date not null,
-ora_fine date not null,
+ora_inizio datetime not null,
+ora_fine datetime not null,
 max_iscritti int
 )DEFAULT CHARSET="utf8" ENGINE=InnoDB;
 

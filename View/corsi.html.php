@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>IIS Iscrizine Corsi</title>
+    <title>IIS Iscrizione Corsi</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
     <![endif]-->
   </head>
 
-  <body onLoad="Inizia()">
+  <body onLoad="inizia()">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -55,15 +55,20 @@
         <!--Scelta corsi giorno 21-->
         <li>
           <div id="formUno" class="">
-            <form action="" method="post">
-                <a class="btn btn-success" onClick="MostraUno();">Corsi giorno 21 - mostra</a>
+            <form name="GiornoUno"action="" method="post">
+                <a class="btn btn-success" id="button1" onClick="mostra('1');">Corsi giorno 21 - mostra</a>
+                <br>
                 <div id="corsiUno">
                   <!-- Lista Corsi-->
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <!---->
-                  <br><button type="submit" class="btn btn-success">Vai</button>
+                  <?php
+                  if(isset($primo_giorno_courses)){
+                      foreach($primo_giorno_courses as $cours){
+                        echo "<input name='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
+                      }
+                      echo ' <br><button type="submit" class="btn btn-success">Vai</button>';
+                    }
+                  ?>
+
                 </div>
             </form>
           </div>
@@ -72,15 +77,20 @@
         <!--Scelta corsi giorno 22-->
         <li>
           <div id="formDue" class="">
-            <form action="" method="post">
-                <a class="btn btn-success" onClick="MostraDue();">Corsi giorno 22 - mostra</a>
+            <form name="GiornoDue" action="" method="post">
+                <a class="btn btn-success" id="button2" onClick="mostra('2');">Corsi giorno 22 - mostra</a>
                 <div id="corsiDue">
                   <!-- Lista Corsi -->
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
+                  <?php
+                  if(isset($secondo_giorno_courses)){
+                      foreach($secondo_giorno_courses as $cours){
+                        echo "<input name='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
+                      }
+                        echo'<br><button type="submit" class="btn btn-success">Vai</button>';
+                      }
+                  ?>
                   <!---->
-                  <br><button type="submit" class="btn btn-success">Vai</button>
+
                 </div>
             </form>
           </div>
@@ -89,15 +99,21 @@
         <!--Scelta corsi giorno 23-->
         <li>
           <div id="formTre" class="">
-            <form action="" method="post">
-                <a class="btn btn-success" onClick="MostraTre();">Corsi giorno 23 - mostra</a>
+            <form name="GiornoTre" action="" method="post">
+                <a class="btn btn-success" id="button3" onClick="mostra('3');">Corsi giorno 23 - mostra</a>
                 <div id="corsiTre">
                   <!-- Lista Corsi-->
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
-                  <input type="checkbox"> La mamma di Nik =></input><ora> 9:00 - 11:00</ora><br>
+                  <?php
+                  if(isset($terzo_giorno_courses)){
+                      foreach($terzo_giorno_courses as $cours){
+                        echo "<input id ='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
+
+                      }
+                        echo '<br><button type="submit" class="btn btn-success">Conferma</button>';
+                    }
+                  ?>
                   <!---->
-                  <br><button type="submit" class="btn btn-success">Conferma</button>
+
                 </div>
               </form>
             </div>

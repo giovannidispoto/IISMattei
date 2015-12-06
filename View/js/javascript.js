@@ -1,38 +1,50 @@
-function Inizia(){
+function inizia(){
 	document.getElementById("corsiUno").style.display = "none";
 	document.getElementById("corsiDue").style.display = "none";
 	document.getElementById("corsiTre").style.display = "none";
+	document.getElementById("button1").innerHTML = "Corsi giorno 21 -mostra";
+	document.getElementById("button2").innerHTML = "Corsi giorno 22 -mostra";
+	document.getElementById("button3").innerHTML = "Corsi giorno 23 -mostra";
 }
 
-function MostraUno(){
-	var corsiUno = document.getElementById("corsiUno");
-	if(corsiUno.style.display == "block"){
-		corsiUno.style.display = "none";
-		Inizia();
-	}else {
-		Inizia();
-		corsiUno.style.display = "block";
-	}
-}
+function mostra(cours, day){
 
-function MostraDue() {
-	var corsiDue = document.getElementById("corsiDue");
-	if(corsiDue.style.display == "block"){
-		corsiDue.style.display = "none";
-		Inizia();
-	}else {
-		Inizia();
-		corsiDue.style.display = "block";
-	}
-}
+	switch(cours){
+		case '1':
+					var corsi = document.getElementById("corsiUno");
+					if(corsi.style.display == "block"){
+									corsi.style.display = "none";
+										inizia();
+										document.getElementById("button1").innerHTML = "Corsi giorno 21 -mostra";
+									}else{
+										inizia();
+										corsi.style.display = "block";
+										document.getElementById("button1").innerHTML = "Corsi giorno 21 -nascondi";
+									}
 
-function MostraTre() {
-	var corsiTre = document.getElementById("corsiTre");
-	if(corsiTre.style.display == "block"){
-		corsiTre.style.display = "none";
-		Inizia();
-	}else {
-		Inizia();
-		corsiTre.style.display = "block";
+							break;
+		case '2':
+					var corsi = document.getElementById("corsiDue");
+					if(corsi.style.display == "block"){
+										corsi.style.display = "none";
+										inizia();
+										document.getElementById("button2").innerHTML = "Corsi giorno 22 -mostra";
+									}else{
+										inizia();
+										corsi.style.display = "block";
+										document.getElementById("button2").innerHTML = "Corsi giorno 22 -nascondi";
+									}
+							break;
+		case '2':
+		var corsi = document.getElementById("corsiTre");
+					if(corsi.style.display == "block"){
+										inizia();
+										document.getElementById("button3").innerHTML = "Corsi giorno 23 -mostra";
+									}else{
+										inizia();
+										corsi.style.display = "block";
+										document.getElementById("button3").innerHTML = "Corsi giorno 23 -nascondi";
+									}
+						break;
 	}
 }

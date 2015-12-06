@@ -67,8 +67,32 @@ class Database{
 					'name' => $row['name'],
 					'surname' => $row['surname']
 					);
-				return $user;
+
 			}
+			return $user;
+		}
+
+	}
+
+	function getCourses($date){
+		$sql = "SELECT id_corso,descrizione, time_format(sec_to_time(time_to_sec(ora_inizio)),'%H:%i') as ora_inizio, time_format(sec_to_time(time_to_sec(ora_fine)),'%H:%i') as ora_fine FROM Corsi WHERE date(ora_inizio) = :data";
+		try{
+			  $stmt = $this->pdo->prepare($sql);
+			  $stmt->bindValue(":data",$date);
+			  $result = $stmt->execute();
+		}catch(PDOException $e){
+			echo "Error selecting Courses <br>".$e->getMessage();
+		}
+		if($result > 0){
+			while($row = $stmt->fetch()){
+					$courses[]= array(
+						'id' => $row['id_corso'],
+						'descrizione' => $row['descrizione'],
+						'ora_inizio' => $row['ora_inizio'],
+						'ora_fine' => $row['ora_fine']
+						);
+			}
+			if(isset($courses)) return $courses;
 		}
 
 	}
