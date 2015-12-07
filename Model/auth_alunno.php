@@ -7,13 +7,14 @@
             $db->connect();
             $response = $db->authAlunno($username,$password);
 
+
              if(!empty($response)){
               $_SESSION['id'] = hash("sha512",uniqid($response['cod_matricola']));
-              $_SESSION['name'] = $response['name'];
-              $_SESSION['surname'] = $response['surname'];
-              $_SESSION['type'] = "Alunno";
-              header("Location: AreaAlunno/index.php");
-            }
+               $_SESSION['name'] = $response['name'];
+               $_SESSION['surname'] = $response['surname'];
+               $_SESSION['type'] = "Alunno";
+               header("Location: AreaAlunni/index.php");
+             }
 
 
 

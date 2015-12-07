@@ -22,7 +22,7 @@ class Database{
 	}
 
 	function authAlunno($username, $password){
-			$sql = "SELECT * FROM Alunni A INNER JOIN Login L ON A.cod_matricola = L.cod_matricola WHERE A.cod_matricola = :username and L.pass = :password";
+			$sql = "SELECT Nome,Cognome, A.cod_matricola FROM Alunni A INNER JOIN LoginAlunni L ON A.cod_matricola = L.cod_matricola WHERE A.cod_matricola = :username and L.pass = :password";
 			//$password = hash("sha512",$password);
 			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
@@ -37,18 +37,45 @@ class Database{
 		if($result > 0){
 			while($row = $stmt->fetch()){
 				 $user = array(
-				 	'cod_matricola' => $row['Cod_matricola'],
+				 	'cod_matricola' => $row['cod_matricola'],
 				 	'name' => $row['Nome'],
 					'surname' => $row['Cognome']
 				 	);
 			}
-			return $user;
+			if(isset($user))return $user;
 		}
 	}
 
-	function AuthAmministratore($username, $password){
+	function authAmministratore($username, $password){
 
-		$sql = "SELECT * FROM Amministratore A INNER JOIN Login L ON A.id = L.cod_matricola WHERE A.username = :username and L.pass = :password";
+		$sql = "SELECT * FROM Amministratori A INNER JOIN LoginAmministratori L ON A.cod_amministratore = L.cod_amministratore WHERE A.cod_amministratore = :username and L.pass = :password ";
+			//$password = hash("sha512",$password);
+			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username",$username);
+				$stmt->bindValue(":password",$password);
+				$result = $stmt->execute();
+		}catch(PDOException $e){
+				echo "An Error Occured ".$e->getMessage();
+				die();
+		}
+		if($result > 0){
+			while($row = $stmt->fetch()){
+				$user = array(
+					'cod_amministratore' => $row['cod_amministratore'],
+					'name' => $row['Nome'],
+					'surname' => $row['Cognome']
+					);
+			}
+			return $user;
+		}
+
+	}
+
+	function authRelatore($username, $password){
+
+		$sql = "SELECT * FROM Relatori A INNER JOIN LoginRelatori L ON A.id = L.cod_matricola WHERE A.username = :username and L.pass = :password";
 			//$password = hash("sha512",$password);
 			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
@@ -63,9 +90,9 @@ class Database{
 		if($result > 0){
 			while($row = $stmt->fetch()){
 				$user[] = array(
-					'id' => $row['id'],
-					'name' => $row['name'],
-					'surname' => $row['surname']
+					'cod_relatore' => $row['cod_relatore'],
+					'name' => $row['Nome'],
+					'surname' => $row['Cognome']
 					);
 
 			}
@@ -95,6 +122,27 @@ class Database{
 			if(isset($courses)) return $courses;
 		}
 
+	}
+
+	function getSubscribed($id_corso){
+		$sql = "SELECT A.Nome, A.Cognome FROM Alunni A, Corsi C, Iscrizioni I, Relatori R WHERE A.cod_matricola = I.cod_matricola and I.id_corso = C.id_corso and C.cod_relatore = R.cod_relatore and C.id = :id_corso";
+
+	try{
+			  $stmt = $this->pdo->prepare($sql);
+			  $stmt->bindValue(":id_corso",$id_corso);
+			  $result = $stmt->execute();
+		}catch(PDOException $e){
+			echo "Error Listing Courses <br>".$e->getMessage();
+		}
+		if($result > 0){
+			while($row = $stmt->fetch()){
+					$subscribed[] = array(
+						'nome' => $row['nome'],
+						'cognome' => $row['cognome']
+						);
+			}
+			if(isset($subscribed)) return $subscribed;
+		}
 	}
 
 }

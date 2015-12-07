@@ -47,7 +47,7 @@
         <div id="loginAlunno" align="center">
         <form class="navbar-form navbar-right" action="?auth=alunno" method="post" >
           <div>
-            <a>Area login alunno</a><br><br>
+            <a>Area login Alunno</a><br><br>
           </div>
             <input type="text" placeholder="Matricola alunno" name="username" id="username" class="form-control"><br><br>
             <input type="password" placeholder="Password" name = "password" id="password" class="form-control"><br><br>
@@ -60,12 +60,13 @@
 
 
         <div id="loginDocente" align="center">
-        <form class="navbar-form navbar-right">
+        <form action="?auth=amministratore" class="navbar-form navbar-right" method="post">
           <div>
-            <a>Area login docente</a><br><br>
+            <a>Area login Amministratore</a><br><br>
           </div>
-            <input type="text" placeholder="Codice docente" class="form-control"><br><br>
-            <input type="password" placeholder="Password" class="form-control"><br><br>
+            <input type="text" placeholder="Codice docente" name="username" class="form-control"><br><br>
+            <input type="password" placeholder="Password" name="password" class="form-control"><br><br>
+            <input type="hidden" name="token" value="<?php echo $token?>">
           <button type="submit" class="btn btn-success">Entra</button>
           <button onClick="Cambia();" type="submit" class="btn btn-success">Sei un alunno?</button>
         </form>

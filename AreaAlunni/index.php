@@ -7,18 +7,25 @@ include'../Class/Database.class.php';
     $_SESSION = array();
     session_destroy();
   }
+
    if(!isset($_SESSION['id'])){
     header("Location:../index.php");
-  }else{
-    $nome = $_SESSION["name"];
-    $cognome = $_SESSION["surname"];
-    $db = new Database();
-    $db->connect();
-    $primo_giorno_courses = $db->getCourses('2015/12/21');
-    $secondo_giorno_courses = $db->getCourses('2015/12/22');
-    $terzo_giorno_courses = $db->getCourses('2015/12/23');
-    include '../View/corsi.html.php';
   }
+
+  if(isset($_SESSION['id']) && $_SESSION['type'] == 'Alunno'){
+    include'../Model/courses.php';
+    include '../View/corsi.html.php';
+      }
+
+      if(isset($_SESSION['id']) && $_SESSION['type'] == 'Relatore'){
+         $area = 'AreaRelatori';
+          include '../View/access_denied.html.php';
+      }
+
+      if(isset($_SESSION['id']) && $_SESSION['type'] == 'Amministratore'){
+        $area = 'AreaAmministrazione';
+          include '../View/access_denied.html.php';
+      }
 
   ?>
 

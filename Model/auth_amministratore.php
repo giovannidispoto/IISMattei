@@ -6,15 +6,14 @@
             $db = new Database();
             $db->connect();
             $response = $db->authAmministratore($username,$password);
-            print_r($response);
 
-             foreach($response as $row){
-              $_SESSION['user_id'] = $row['id'];
-              $_SESSION['name'] = $row['name'];
-              $_SESSION['surname'] = $row['surname'];
+          if(!empty($response)){
+                  $_SESSION['id'] = $response['cod_amministratore'];
+                  $_SESSION['name'] = $response['name'];
+                  $_SESSION['surname'] = $response['surname'];
+                  $_SESSION['type'] = 'Amministratore';
+                header("Location:/AreaAmministrazione/");
             }
-              $_SESSION['type'] = 'Amministratore';
-              header("Location:/AreaAmministrazione/");
 
 
 
