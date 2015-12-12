@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>IIS Iscrizine Corsi</title>
+    <title>IIS Iscrizione Corsi | Area Relatori</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">

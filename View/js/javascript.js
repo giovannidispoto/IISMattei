@@ -1,50 +1,75 @@
 function inizia(){
-	document.getElementById("corsiUno").style.display = "none";
-	document.getElementById("corsiDue").style.display = "none";
-	document.getElementById("corsiTre").style.display = "none";
-	document.getElementById("button1").innerHTML = "Corsi giorno 21 -mostra";
-	document.getElementById("button2").innerHTML = "Corsi giorno 22 -mostra";
-	document.getElementById("button3").innerHTML = "Corsi giorno 23 -mostra";
+       document.getElementById("corsiPrimaParte").style.display="block";
+       document.getElementById("corsiSecondaParte").style.display="block";
+       document.getElementById("corsiTuttoIlGiorno").style.display="block";       
+    }
+
+function deselect(nome){
+		options = document.getElementsByName(nome);
+		for(i = 0; i < options.length; i++){
+			options[i].checked = false;
+		}
 }
 
-function mostra(cours, day){
+function selectFirst(nome){
+	options = document.getElementsByName(nome);
+	options[0].checked = true;
+}
 
-	switch(cours){
-		case '1':
-					var corsi = document.getElementById("corsiUno");
-					if(corsi.style.display == "block"){
-									corsi.style.display = "none";
-										inizia();
-										document.getElementById("button1").innerHTML = "Corsi giorno 21 -mostra";
-									}else{
-										inizia();
-										corsi.style.display = "block";
-										document.getElementById("button1").innerHTML = "Corsi giorno 21 -nascondi";
-									}
+    function nascondi(){
+      var gCompleto = document.getElementById("completo");
+      var gDiviso = document.getElementById("diviso");
+       inizia();
+      if(gDiviso.checked){
+        document.getElementById("corsiTuttoIlGiorno").style.display="none";
+      	 deselect("corso");
+       selectFirst("corsoPrimaMezza");
+       selectFirst("corsoSecondaMezza");
+        }
+      if(gCompleto.checked){
+        document.getElementById("corsiPrimaParte").style.display="none";
+        document.getElementById("corsiSecondaParte").style.display="none";
+        deselect("corsoPrimaMezza");
+        deselect("corsoSecondaMezza");
+        selectFirst("corso");
+      }
+    }
 
-							break;
-		case '2':
-					var corsi = document.getElementById("corsiDue");
-					if(corsi.style.display == "block"){
-										corsi.style.display = "none";
-										inizia();
-										document.getElementById("button2").innerHTML = "Corsi giorno 22 -mostra";
-									}else{
-										inizia();
-										corsi.style.display = "block";
-										document.getElementById("button2").innerHTML = "Corsi giorno 22 -nascondi";
-									}
-							break;
-		case '2':
-		var corsi = document.getElementById("corsiTre");
-					if(corsi.style.display == "block"){
-										inizia();
-										document.getElementById("button3").innerHTML = "Corsi giorno 23 -mostra";
-									}else{
-										inizia();
-										corsi.style.display = "block";
-										document.getElementById("button3").innerHTML = "Corsi giorno 23 -nascondi";
-									}
-						break;
+     function checkError(){
+      	var error = getUrlVars()['error'];
+      	if(typeof error!== "undefined"){
+      		switch(error){
+      			case 'user_not_found':
+      		}
+      	}
+      }
+
+	function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		vars[key] = value;
+		});
+		return vars;
 	}
+
+	function Cambia(){
+	var alunno = document.getElementById("loginAlunno");
+	var docente = document.getElementById("loginDocente");
+	if(alunno.style.display == "none"){
+		alunno.style.display = "block";
+		docente.style.display = "none";
+	}else{
+		docente.style.display = "block";
+		alunno.style.display = "none";
+	}
+}
+
+function controlloFormLogin(){
+		var user_alunno = document.getElementById("username").value;
+		var passw_alunno = document.getElementById("password").value;
+		if(user_alunno.length == 0 || passw_alunno.length == 0){
+				document.getElementById("erroreLogin").style.display="";
+				return false;
+		}
+		return true;
 }

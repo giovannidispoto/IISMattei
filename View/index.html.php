@@ -23,7 +23,7 @@
 
   </head>
 
-  <body onLoad="Inizia()">
+  <body onLoad="checkError();">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -44,6 +44,7 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Errore!<br></strong>Riempi i campi username e password!
       </div>
+
         <div id="loginAlunno" align="center">
         <form class="navbar-form navbar-right" action="?auth=alunno" method="post" >
           <div>
@@ -91,7 +92,7 @@
     <script src="View/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="View/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="View/js/javascriptHome.js"></script>
+    <script src="View/js/javascript.js"></script>
     <script src="View/js/javascriptHome.js"></script>
   </body>
 </html>

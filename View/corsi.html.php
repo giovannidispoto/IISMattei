@@ -29,9 +29,10 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    </script>
   </head>
 
-  <body onLoad="inizia()">
+  <body onLoad="nascondi();controllo();">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -40,86 +41,74 @@
         </div>
       </div>
     </nav>
-<center>
-    <h1>Bevenuto <?php echo "$nome $cognome"?></h1>
-    <p>scegli i corsi a cui ti vuoi iscrivere</p>
-
-    <input type="button" value="Logout" onclick="location.href='index.php?logout'">
-
-</center>
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container" >
-        <div id="corsiForm" align="center">
-        <ul id="listeCorsi">
+      <?php if(isset($corso_pieno)):?>
+    <div class="alert alert-warning" id="erroreLogin">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Errore!<br></strong>Il corso <?php echo $corso_pieno?> è pieno;
+      </div>
+<?php endif;?>
+      <h1>Bevenuto <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
+      <p>Scegli i corsi a cui vorresti iscriverti <?php echo"$day $date";?></p>
         <!--Scelta corsi giorno 21-->
-        <li>
-          <div id="formUno" class="">
-            <form name="GiornoUno"action="" method="post">
-                <a class="btn btn-success" id="button1" onClick="mostra('1');">Corsi giorno 21 - mostra</a>
-                <br>
-                <div id="corsiUno">
+        <br>
+          <div id="formCorsi" class="">
+            <form action="?register=<?php echo $control;?>" method="post">
+                
                   <!-- Lista Corsi-->
-                  <?php
-                  if(isset($primo_giorno_courses)){
-                      foreach($primo_giorno_courses as $cours){
-                        echo "<input name='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
-                      }
-                      echo ' <br><button type="submit" class="btn btn-success">Vai</button>';
+                 <p style="margin-left:-10px"><input type="radio" name="divisioneCorsi" id="completo" value="completo" onClick="nascondi()" checked><b>&nbspCorsi tutta la giornata</b></p>
+                 <div id="corsiTuttoIlGiorno" style="text-align: left;"> 
+                  <?php $primo = true;
+                       foreach($courses as $course){
+                    if($course['ora_inizio'] == "08:30" && $course['ora_fine'] == "13:00"){
+                        if($primo){
+                            echo "<p>Corsi per tutta la giornata (08.30,13:00)</p>";
+                            echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata' checked>&nbsp".$course['descrizione']."</input><br>";
+                            $primo = false;
+                          }else{
+                         echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata'>&nbsp".$course['descrizione']."</input><br>";
+                       }
                     }
+                   }?>
+                  </div>
+                  <br>
+          <p style="margin-left:-10px"><input type="radio" name="divisioneCorsi" id="diviso" value="diviso"onClick="nascondi()"><b>&nbspCorsi divisi</b></p>
+
+                  <div id="corsiPrimaParte">
+                  <?php $primo = true;
+                      foreach($courses as $course){
+                     if($course['ora_inizio'] == "08:30" && $course['ora_fine'] == "10:55"){ 
+                        if($primo){
+                          echo "<p>Corsi per la prima metà giornata (08:30, 10:55)</p>";
+                          echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza' checked>&nbsp".$course['descrizione']."</input><br>";
+                           $primo = false;
+                        }else{
+                      echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza'>&nbsp".$course['descrizione']."</input><br>";
+                        }
+                     }
+                   }
                   ?>
 
-                </div>
+                   </div>
+                   <div id="corsiSecondaParte">
+                   <?php $primo = true;
+                   foreach($courses as $course){
+                         if($course['ora_inizio'] == "10:55" && $course['ora_fine'] == "13:00"){
+                            if($primo){
+                               echo "<p>Corsi per la seconda metà giornata (10.35, 13.00)</p>";
+                               echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza' checked>&nbsp".$course['descrizione']."</input><br>";
+                               $primo = false;
+                            }else{
+                             echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza'>&nbsp".$course['descrizione']."</input><br>";
+                            }
+                            }
+                   }?>
+                   </div>
+                  <br><button type="submit" class="btn btn-success">Prossimo</button>
             </form>
-          </div>
-        </li>
-
-        <!--Scelta corsi giorno 22-->
-        <li>
-          <div id="formDue" class="">
-            <form name="GiornoDue" action="" method="post">
-                <a class="btn btn-success" id="button2" onClick="mostra('2');">Corsi giorno 22 - mostra</a>
-                <div id="corsiDue">
-                  <!-- Lista Corsi -->
-                  <?php
-                  if(isset($secondo_giorno_courses)){
-                      foreach($secondo_giorno_courses as $cours){
-                        echo "<input name='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
-                      }
-                        echo'<br><button type="submit" class="btn btn-success">Vai</button>';
-                      }
-                  ?>
-                  <!---->
-
-                </div>
-            </form>
-          </div>
-        </li>
-
-        <!--Scelta corsi giorno 23-->
-        <li>
-          <div id="formTre" class="">
-            <form name="GiornoTre" action="" method="post">
-                <a class="btn btn-success" id="button3" onClick="mostra('3');">Corsi giorno 23 - mostra</a>
-                <div id="corsiTre">
-                  <!-- Lista Corsi-->
-                  <?php
-                  if(isset($terzo_giorno_courses)){
-                      foreach($terzo_giorno_courses as $cours){
-                        echo "<input id ='".$cours['id']."'type='checkbox'>".$cours['descrizione']." ".$cours['ora_inizio'].", ".$cours['ora_fine']."<br>";
-
-                      }
-                        echo '<br><button type="submit" class="btn btn-success">Conferma</button>';
-                    }
-                  ?>
-                  <!---->
-
-                </div>
-              </form>
-            </div>
-          </li>
-          </ul>
-        </div>
+</div>
       </div>
     </div>
 

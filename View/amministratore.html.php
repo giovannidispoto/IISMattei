@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>IIS Iscrizine Corsi</title>
+    <title>IIS Iscrizione Corsi | Area Amministrazione</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">
@@ -54,9 +54,17 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-      <h1> Benvenuto <?php echo "$nome $cognome"?></h1> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-success">Logout</button>
-
-
+      <h1> Benvenuto <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
+      <p>Seleziona una opzione per vederne il contenuto<br><b>Da grandi poteri derivano grandi responsabilità</b></p>
+      <br>
+        <div class="list-group">
+          <a href="index.php?elenco=all" class="list-group-item">Vedi l'elenco degli alunni</a>
+          <a href="index.php?elenco=not" class="list-group-item ">Vedi le persone non ancora iscritte</a>
+          <a href="#" class="list-group-item">Crea un nuovo corso</a>
+          <a href="#" class="list-group-item">Elimina un corso</a>
+           <a href="#" class="list-group-item">Modifica un corso</a>
+          <a href="#" class="list-group-item">Pensa ai Marò (Sempre)</a>
+        </div>
       </div>
     </div>
 

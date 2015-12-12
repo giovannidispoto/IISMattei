@@ -8,7 +8,7 @@
             $response = $db->authAmministratore($username,$password);
 
           if(!empty($response)){
-                  $_SESSION['id'] = $response['cod_amministratore'];
+                  $_SESSION['id'] = $response['username'];
                   $_SESSION['name'] = $response['name'];
                   $_SESSION['surname'] = $response['surname'];
                   $_SESSION['type'] = 'Amministratore';

@@ -1,5 +1,7 @@
 <?php
-      include '../Helpers/secure_session.php';
+include '../Helpers/secure_session.php';
+include'../Class/Database.class.php';
+include'../Helpers/helpers.php';
       session_secure_start();
 
     if(isset($_GET["logout"])){
@@ -21,8 +23,18 @@
       }
 
       if(isset($_SESSION['id']) && $_SESSION['type'] == 'Amministratore'){
+      	if(isset($_GET['elenco']) and $_GET['elenco'] == "all"){
+      		$iscritto = true;
+      		include '../Model/elenco_alunni.php';
+      		include '../View/elenco_alunni.html.php';
+      	}else if (isset($_GET['elenco']) and $_GET['elenco'] == "not"){
+      		$iscritto = false;
+      		include '../Model/elenco_alunni.php';
+      		include '../View/elenco_alunni.html.php';
+      	}else{
         $nome = $_SESSION['name'];
         $cognome = $_SESSION['surname'];
         include '../View/amministratore.html.php';
+      }
       }
   ?>
