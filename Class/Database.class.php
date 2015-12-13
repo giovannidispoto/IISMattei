@@ -265,5 +265,23 @@ class Database{
 				return $result;
 		}
 
+	function getRelatori($term,$term2=""){
+		$sql = "SELECT username FROM Relatori WHERE nome like :nome and cognome like :cognome ";
+		//$sql = "SELECT username FROM Relatori WHERE nome like '%ant%' and cognome like '%%'";
+		try{
+					$stmt = $this->pdo->prepare($sql);
+		//$result = $this->pdo->query($sql);
+					$stmt->bindValue(":nome",'%'.$term.'%');
+					$stmt->bindValue(":cognome",'%'.$term2.'%');
+					$result = $stmt->execute();
+			}catch(PDOException $e){
+				echo "Errore richiamo lista relatori <br>".$e->getMessage();
+			}
+				//$result = $stmt->fetchAll();
+				$result = $stmt->fetchAll();
+				//print_r($result);
+				return $result;
+		
+	}
 }
 ?>
