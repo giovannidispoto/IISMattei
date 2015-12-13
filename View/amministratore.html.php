@@ -60,7 +60,7 @@
         <div class="list-group">
           <a href="index.php?elenco=all" class="list-group-item">Vedi l'elenco degli alunni</a>
           <a href="index.php?elenco=not" class="list-group-item ">Vedi le persone non ancora iscritte</a>
-          <a href="#" class="list-group-item">Crea un nuovo corso</a>
+          <a href="index.php?course=create" class="list-group-item">Crea un nuovo corso</a>
           <a href="#" class="list-group-item">Elimina un corso</a>
            <a href="#" class="list-group-item">Modifica un corso</a>
           <a href="#" class="list-group-item">Pensa ai Marò (Sempre)</a>

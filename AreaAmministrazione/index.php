@@ -31,6 +31,8 @@ include'../Helpers/helpers.php';
       		$iscritto = false;
       		include '../Model/elenco_alunni.php';
       		include '../View/elenco_alunni.html.php';
+      	}else if(isset($_GET['course']) and $_GET['course'] == "create"){
+      			include '../View/gestione_corsi.html.php';
       	}else{
         $nome = $_SESSION['name'];
         $cognome = $_SESSION['surname'];
