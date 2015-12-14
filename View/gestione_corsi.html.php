@@ -76,7 +76,25 @@
           <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
           <br>
           <br>
-         <form>
+            <div class="alert alert-warning" style="display:none" id="erroreCampi">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Riempi tutti i campi!
+            </div>
+           <div class="alert alert-warning" style="display:none" id="errorePassword">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Le password non corrispondono!
+            </div>
+            <div class="alert alert-warning" style="display:none" id="erroreAula">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>L'aula deve essere numerica!
+            </div>
+             <div class="alert alert-warning" style="display:none" id="erroreMaxIscritti">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Il Numero massimo di iscritti deve essere numerico!
+            </div>
+            <br>
+          <!-- Form Corso -->
+         <form action="?course=new_course" method="post">
             <div class="form-group">
               <label for="labelCorso">Corso</label>
               <input type="text" class="form-control" id="inputCorso" name="descrizione" placeholder="Nome Corso">
@@ -86,27 +104,31 @@
               <label for="labelUsername">Username Relatore</label>
               <input type="text" class="form-control" name="username_relatore" id="inputUsernameRelatore" placeholder="Cerca per nome">
             </div>
-           <p><input type="radio" name="relatore" value="nuovo" id="rel-nuovo" onclick="controlloAccount();"> Nuovo Account</p>            
+           <p><input type="radio" name="relatore" value="rel-nuovo" id="rel-nuovo" onclick="controlloAccount();"> Nuovo Account</p>            
             <div class="form-group" id="rel-nuovo-div">
               <label for="labelUsername">Username </label>
-              <input type="text" class="form-control" name="username_relatore" id="inputNuovoUsernameRelatore" placeholder="Username Relatore">
+              <input type="text" class="form-control" name="username_nuovo_relatore" id="inputNuovoUsernameRelatore" placeholder="Username Relatore">
               <label for="labelUsername">Nome </label>
               <input type="text" class="form-control" name="nome_relatore" id="inputNuovoNomeRelatore" placeholder="Nome Relatore">
               <label for="labelUsername">Cognome </label>
               <input type="text" class="form-control" name="cognome_relatore" id="inputNuovoCognomeRelatore" placeholder="Cognome Relatore">
               <label for="labelUsername">Passowrd</label>
-              <input type="text" class="form-control" name="password_relatore" id="inputNuovoPasswordRelatore" placeholder="Password">
-               <label for="labelUsername">Ripeti Password</label>
-              <input type="text" class="form-control" name="password2_relatore" id="inputNuovoPassword2Relatore" placeholder="Ripeti Password">
+              <input type="password" class="form-control" name="password_relatore" id="inputNuovoPasswordRelatore" placeholder="Password">
+              <label for="labelUsername">Ripeti Password</label>
+              <input type="password" class="form-control" id="inputNuovoPassword2Relatore" placeholder="Ripeti Password">
             </div>
              <div class="form-group">
               <label for="inputAlula">Aula</label>
               <input type="text" class="form-control" name="aula" id="inputAula" placeholder="Aula">
             </div>
             <div class="form-group">
+              <label for="inputMaxIscritti">Numero Massimo Iscritti</label>
+              <input type="text" class="form-control" name="max_iscritti" id="inputMaxIscritti" placeholder="Numero Massimo Iscritti">
+            </div>
+            <div class="form-group">
                  <label for="labelData">Data </label>
                   <div class='input-group date' id='datepicker1'>
-                      <input type='text' class="form-control" placeholder="Data"/>
+                      <input type='text' class="form-control" name="data" id="inputData" placeholder="Data"/>
                       <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
@@ -115,8 +137,8 @@
             <div class="form-group">
               <label for="inputOraInizio">Ora Inizio</label>
               <select onClick="controlloOra();"class="form-control" name="ora_inizio" id="ora_inizio">
-                <option value="8.30">8:30</option>
-                <option value="10.55">10:55</option>
+                <option value="8:30:00">8:30</option>
+                <option value="10:55:00">10:55</option>
               </select>
             </div>
              <div class="form-group">
@@ -124,7 +146,7 @@
               <select class="form-control" name="ora_fine" id="ora_fine">
               </select>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" onClick="return checkForm();"class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
@@ -180,15 +202,75 @@
         var fine = document.getElementById("ora_fine");
         var output = "";
         switch(ora){
-            case '8:30':  output += "<option value='10.55'>10.55</option>";
-                          output += "<option value='13.00'>13.00</option>";
+            case '8:30':  output += "<option value='10:55:00'>10.55</option>";
+                          output += "<option value='13:00:00'>13.00</option>";
                           break;
             case '10:55':
-                          output += "<option value='13.00'>13.00</option>";
+                          output += "<option value='13:00:00'>13.00</option>";
                           break;
         }
         fine.innerHTML=output;
      }
+
+     function checkForm(){
+          if((document.getElementById('inputCorso').value.trim()).length > 0){
+              if(document.getElementById("rel-esistente").checked){
+                  if((document.getElementById('inputUsernameRelatore').value.trim()).length > 0){
+                    if((document.getElementById('inputAula').value.trim()).length > 0){
+                      if(isNaN(document.getElementById('inputAula').value.trim())){
+                                    document.getElementById('inputData').value = "";
+                                    document.getElementById('erroreAula').style.display="";
+                                    return false;
+                                  }
+                          if(isNaN(document.getElementById('inputMaxIscritti').value.trim())){
+                                 document.getElementById('inputMaxIscritti').value="";
+                                 document.getElementById('erroreMaxIscritti').style.display="";
+                                 return false;
+                             }
+                      if((document.getElementById('inputData').value.trim()).length > 0){
+                              return true;
+                  }
+                }
+              }
+              document.getElementById('erroreCampi').style.display="";
+                return false;
+              }else if(document.getElementById("rel-nuovo").checked){
+                  if((document.getElementById('inputNuovoUsernameRelatore').value.trim()).length > 0){
+                    if((document.getElementById('inputNuovoNomeRelatore').value.trim()).length > 0){
+                      if((document.getElementById('inputNuovoCognomeRelatore').value.trim()).length > 0){
+                        if((document.getElementById('inputNuovoPasswordRelatore').value.trim()).length > 0){
+                          if((document.getElementById('inputNuovoPassword2Relatore').value.trim()).length > 0){
+                             if((document.getElementById('inputAula').value.trim()).length > 0){
+                              if((document.getElementById('inputData').value.trim())){
+                                 if(isNaN(document.getElementById('inputAula').value.trim())){
+                                    document.getElementById('inputData').value = "";
+                                    document.getElementById('erroreAula').style.display="";
+                                    return false;
+                                  }
+                                  if(isNaN(document.getElementById('inputMaxIscritti').value.trim())){
+                                    document.getElementById('inputMaxIscritti').value="";
+                                     document.getElementById('erroreMaxIscritti').style.display="";
+                                     return false;
+                                  }
+                                  if(document.getElementById('inputNuovoPasswordRelatore').value.trim() != document.getElementById('inputNuovoPassword2Relatore').value.trim()){
+                                      document.getElementById('errorePassword').style.display="";
+                                      return false;
+                                  }else 
+                                      return true;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+               }
+             }
+    document.getElementById('erroreCampi').style.display="";
+    return false;
+ } 
+
+
 
      function controlloAccount(){
           var rel_nuovo = document.getElementById("rel-nuovo");

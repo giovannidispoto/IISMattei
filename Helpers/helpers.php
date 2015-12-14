@@ -13,3 +13,8 @@
 				$result = "$yyyy-$mm-$dd";
 				return $result;
 			}
+
+function escape_string($string) {
+    $regex = "/[\\+\\-\\=\\&\\|\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\<\\>\\?\\:\\\\\\/]/";
+    return preg_replace($regex, addslashes('\\$0'), $string);
+}

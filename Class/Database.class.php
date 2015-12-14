@@ -283,5 +283,70 @@ class Database{
 				return $result;
 		
 	}
+
+	function checkRelatore($username){
+		$sql = "SELECT * FROM Relatori WHERE username = :username";
+
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username",$username);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nel controllare l'username<br>".$e->getMessage();
+		}
+			if($stmt->rowCount() > 0) return true;
+			return false;
+	}
+
+	function registraCorso($descrizione,$username_relatore,$aula,$max_iscritti,$data,$ora_inizio,$ora_fine){
+		$sql = "INSERT INTO Corsi(descrizione,username_relatore,aula,max_iscritti,data,ora_inizio,ora_fine) VALUES(:descrizione,:username_relatore,:aula,:max_iscritti,:data,:ora_inizio,:ora_fine)";
+
+			try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":descrizione",$descrizione);
+				$stmt->bindValue(":username_relatore",$username_relatore);
+				$stmt->bindValue(":aula",$aula);
+				$stmt->bindValue(":max_iscritti",$max_iscritti);
+				$stmt->bindValue(":data",$data);
+				$stmt->bindValue(":ora_inizio",$ora_inizio);
+				$stmt->bindValue(":ora_fine",$ora_fine);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nel controllare l'username<br>".$e->getMessage();
+		}
+			if($stmt->rowCount() > 0) return true;
+			return false;
+
+	}
+
+	function createRelatore($username_relatore,$nome_relatore,$cognome_relatore,$password_relatore){
+		$sql = "INSERT INTO Relatori(username,nome,cognome) VALUES (:username_relatore, :nome_relatore,:cognome_relatore)";
+		$sql2 = "INSERT INTO LoginRelatori (username_relatore, pass) VALUES (:username_relatore, :password_relatore)";
+
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username_relatore",$username_relatore);
+				$stmt->bindValue(":nome_relatore",$nome_relatore);
+				$stmt->bindValue(":cognome_relatore",$cognome_relatore);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nella creazione del Relatore <br>".$e->getMessage();
+		}
+			if($stmt->rowCount() > 0){
+
+					try{
+							$stmt = $this->pdo->prepare($sql2);
+							$stmt->bindValue(":username_relatore",$username_relatore);
+							$stmt->bindValue(":password_relatore",$password_relatore);
+							$stmt->execute();
+					}catch(PDOException $e){
+						echo "Errore nella creazione del Relatore <br>".$e->getMessage();
+					}
+
+					if($stmt->rowCount() > 0) return true;
+					else return false;
+			}
+	}
+
 }
 ?>
