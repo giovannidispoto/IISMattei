@@ -15,31 +15,31 @@ class Database{
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			$this->pdo->exec('SET NAMES "utf8"');
 		}catch(PDOException $e){
-			echo "Impossibile connettersi al DB ".$e->getMessage();
+			echo "Impossibile connettersi al DB ";
 			return false;
 		}
 		return true;
 	}
 
-	function authAlunno($username, $password){
-			$sql = "SELECT Nome,Cognome, A.cod_matricola FROM Alunni A INNER JOIN LoginAlunni L ON A.cod_matricola = L.cod_matricola WHERE  A.cod_matricola = :username and L.pass = :password";
+	function authAlunno($cod_matricola,$nome,$cognome){
+			$sql = "SELECT * FROM Alunni A WHERE A.cod_matricola = :cod_matricola and A.nome like :nome and A.cognome like :cognome ";
 			//$password = hash("sha512",$password);
-			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
 				$stmt = $this->pdo->prepare($sql);
-				$stmt->bindValue(":username",$username);
-				$stmt->bindValue(":password",$password);
+				$stmt->bindValue(":cod_matricola",$cod_matricola);
+				$stmt->bindValue(":nome","%".$nome."%");
+				$stmt->bindValue(":cognome","%".$cognome."%");
 				$result = $stmt->execute();
 		}catch(PDOException $e){
-				echo "An Error Occured ".$e->getMessage();
+				echo "An Error Occured ";
 				die();
 		}
 		if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
 				 $user = array(
 				 	'cod_matricola' => $row['cod_matricola'],
-				 	'name' => $row['Nome'],
-					'surname' => $row['Cognome']
+				 	'name' => $row['nome'],
+					'surname' => $row['cognome']
 				 	);
 			}
 			if(isset($user))return $user;
@@ -57,7 +57,7 @@ class Database{
 				$stmt->bindValue(":password",$password);
 				$result = $stmt->execute();
 		}catch(PDOException $e){
-				echo "An Error Occured ".$e->getMessage();
+				echo "An Error Occured ";
 				die();
 		}
 		if($stmt->rowCount() > 0){
@@ -74,7 +74,7 @@ class Database{
 	}
 
 	function authRelatore($username, $password){
-			$sql = "SELECT Nome,Cognome, R.id FROM  Relatori R INNER JOIN LoginRelatori L ON R.id = L.id_relatore WHERE A.username= :username and L.pass = :password";
+			$sql = "SELECT R.nome,R.cognome,R.username FROM Relatori R INNER JOIN LoginRelatori L ON R.username = L.username_relatore WHERE R.username= :username and L.pass = :password ";
 
 			//$password = hash("sha512",$password);
 			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
@@ -84,15 +84,15 @@ class Database{
 				$stmt->bindValue(":password",$password);
 				$result = $stmt->execute();
 		}catch(PDOException $e){
-				echo "An Error Occured ".$e->getMessage();
+				echo "An Error Occured ";
 				die();
 		}
 		if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
-				$user[] = array(
-					'cod_relatore' => $row['cod_relatore'],
-					'name' => $row['Nome'],
-					'surname' => $row['Cognome']
+				$user = array(
+					'cod_relatore' => $row['username'],
+					'name' => $row['nome'],
+					'surname' => $row['cognome']
 					);
 
 			}
@@ -108,7 +108,7 @@ class Database{
 			  $stmt->bindValue(":id_corso",$id);
 			  $result = $stmt->execute();
 		}catch(PDOException $e){
-			echo "Error selecting Courses <br>".$e->getMessage();
+			echo "Error selecting Courses <br>";
 		}
 		if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
@@ -125,7 +125,7 @@ class Database{
 			  $stmt->bindValue(":data",$date);
 			  $result = $stmt->execute();
 		}catch(PDOException $e){
-			echo "Error selecting Courses <br>".$e->getMessage();
+			echo "Error selecting Courses <br>";
 		}
 		if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
@@ -141,6 +141,31 @@ class Database{
 
 	}
 
+	function getCoursesList(){
+		$sql = "SELECT *  FROM Corsi WHERE id_corso NOT IN( SELECT C.id_corso FROM Corsi C INNER JOIN Iscrizioni I ON C.id_corso = I.id_corso )";
+		try{
+				$response = $this->pdo->query($sql);
+		}catch(PDOException $e){
+			echo "Errore nel listare i corsi<br>";
+		}
+		if($response->rowCount() > 0) return $response;
+	}
+
+	function getCoursesOfRelator($username){
+		$sql = "SELECT *  FROM Corsi C WHERE username_relatore = :username";
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username",$username);
+				$response = $stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nel listare i corsi<br>";
+		}
+		if($stmt->rowCount() > 0){
+					return $stmt->fetchAll();
+				}
+	}
+
+	
 	function getSubscribed($id_corso){
 		$sql = "SELECT A.Nome, A.Cognome FROM Alunni A, Iscrizioni I WHERE A.cod_matricola = I.cod_matricola and I.id = :id_corso";
 
@@ -149,7 +174,7 @@ class Database{
 			  $stmt->bindValue(":id_corso",$id_corso);
 			  $result = $stmt->execute();
 		}catch(PDOException $e){
-			echo "Error Listing Courses <br>".$e->getMessage();
+			echo "Error Listing Courses <br>";
 		}
 		if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
@@ -169,7 +194,7 @@ class Database{
 			$stmt->bindValue(":id",$id);
 			$stmt->execute();
 		}catch(PDOException $e){
-				echo "Error Getting numero max corso <br>".$e->getMessage();
+				echo "Error Getting numero max corso <br>";
 		}
 			if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
@@ -189,7 +214,7 @@ class Database{
 					$stmt->bindValue(":cod_matricola",$cod_matricola);
 					$stmt->execute();
 				}catch(PDOException $e){
-					echo "Error<br>".$e->getMessage();
+					echo "Error<br>";
 				}
 				$user_states = $stmt->fetchAll();
 				if($stmt->rowCount() > 0){
@@ -211,7 +236,7 @@ class Database{
 					$stmt->execute();
 					$stmt = $this->pdo->query("SELECT ROW_COUNT() as inseriti");
 				}catch(PDOException $e){
-					echo "Error<br>".$e->getMessage();
+					echo "Error<br>";
 				}
 				while($result = $stmt->fetch()){
 					if($result['inseriti'] > 0) return true;
@@ -228,7 +253,7 @@ class Database{
 						$stmt->bindValue(":id",$id);
 						$stmt->execute();
 			}catch(PDOException $e){
-				echo "Errore aggiornamento stato<br>".$e->getMessage();
+				echo "Errore aggiornamento stato<br>";
 			}
 
 		if($stmt->rowCount() > 0){
@@ -246,7 +271,7 @@ class Database{
 						$stmt->bindValue(":cod_matricola",$id);
 						$stmt->execute();
 			}catch(PDOException $e){
-				echo "Errore aggiornamento stato<br>".$e->getMessage();
+				echo "Errore aggiornamento stato<br>";
 			}
 
 			if($stmt->rowCount() > 0) return true;
@@ -259,23 +284,23 @@ class Database{
 			try{
 					$result = $this->pdo->query($sql);
 			}catch(PDOException $e){
-				echo "Errore richiamo lista alunni<br>".$e->getMessage();
+				echo "Errore richiamo lista alunni<br>";
 			}
 				$result = $result->fetchAll();
 				return $result;
 		}
 
-	function getRelatori($term,$term2=""){
+	function getRelatori($term,$term2="",$term3=""){
 		$sql = "SELECT username FROM Relatori WHERE nome like :nome and cognome like :cognome ";
 		//$sql = "SELECT username FROM Relatori WHERE nome like '%ant%' and cognome like '%%'";
 		try{
 					$stmt = $this->pdo->prepare($sql);
 		//$result = $this->pdo->query($sql);
 					$stmt->bindValue(":nome",'%'.$term.'%');
-					$stmt->bindValue(":cognome",'%'.$term2.'%');
+					$stmt->bindValue(":cognome",'%'.$term2.$term3.'%');
 					$result = $stmt->execute();
 			}catch(PDOException $e){
-				echo "Errore richiamo lista relatori <br>".$e->getMessage();
+				echo "Errore richiamo lista relatori <br>";
 			}
 				//$result = $stmt->fetchAll();
 				$result = $stmt->fetchAll();
@@ -292,7 +317,7 @@ class Database{
 				$stmt->bindValue(":username",$username);
 				$stmt->execute();
 		}catch(PDOException $e){
-			echo "Errore nel controllare l'username<br>".$e->getMessage();
+			echo "Errore nel controllare l'username<br>";
 		}
 			if($stmt->rowCount() > 0) return true;
 			return false;
@@ -312,7 +337,7 @@ class Database{
 				$stmt->bindValue(":ora_fine",$ora_fine);
 				$stmt->execute();
 		}catch(PDOException $e){
-			echo "Errore nel controllare l'username<br>".$e->getMessage();
+			echo "Errore nel controllare l'username<br>";
 		}
 			if($stmt->rowCount() > 0) return true;
 			return false;
@@ -330,7 +355,7 @@ class Database{
 				$stmt->bindValue(":cognome_relatore",$cognome_relatore);
 				$stmt->execute();
 		}catch(PDOException $e){
-			echo "Errore nella creazione del Relatore <br>".$e->getMessage();
+			echo "Errore nella creazione del Relatore <br>";
 		}
 			if($stmt->rowCount() > 0){
 
@@ -340,12 +365,53 @@ class Database{
 							$stmt->bindValue(":password_relatore",$password_relatore);
 							$stmt->execute();
 					}catch(PDOException $e){
-						echo "Errore nella creazione del Relatore <br>".$e->getMessage();
+						echo "Errore nella creazione del Relatore <br>";
 					}
 
 					if($stmt->rowCount() > 0) return true;
 					else return false;
 			}
+	}
+
+	function existUser($username){
+		$sql = "SELECT * FROM Relatori WHERE username = :username";
+
+		try{
+					$stmt = $this->pdo->prepare($sql);
+					$stmt->bindValue(":username",$username);
+					$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nel controllo dello username<br>";
+		}
+
+		if($stmt->rowCount() > 0) return true;
+		return false;
+	}
+
+	function deleteCourse($id_corso){
+		$sql = "DELETE FROM Corsi  WHERE id_corso = :id_corso and id_corso in (SELECT * FROM (SELECT id_corso FROM Corsi Co WHERE Co.id_corso NOT IN (SELECT C.id_corso FROM Corsi C,Iscrizioni I WHERE C.id_corso = I.id_corso and C.id_corso = I.id_corso )) Tbltb)";
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":id_corso",$id_corso);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nella cancellazione del corso<br>";
+		}
+		if($stmt->rowCount() > 0) return true;
+		return false;
+	}
+
+	function getIscritti($id_corso){
+		$sql = "SELECT A.nome, A.cognome,A.classe FROM Iscrizioni I INNER JOIN Alunni A on I.cod_matricola = A.cod_matricola WHERE id_corso = :id_corso";
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":id_corso",$id_corso);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nella cancellazione del corso<br>";
+		}
+		if($stmt->rowCount() > 0){$return = $stmt->fetchAll(); return $return;}
+
 	}
 
 }

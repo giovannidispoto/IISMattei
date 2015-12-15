@@ -65,9 +65,11 @@ function selectFirst(nome){
 }
 
 function controlloFormLogin(){
-		var user_alunno = document.getElementById("username").value;
-		var passw_alunno = document.getElementById("password").value;
-		if(user_alunno.length == 0 || passw_alunno.length == 0){
+		var cod_matricola = document.getElementById("cod_matricola").value;
+		var nome = document.getElementById("nome").value;
+		var cognome = document.getElementById("cognome").value;
+		
+		if(cod_matricola.length == 0 || nome.length == 0 || cognome.length == 0){
 				document.getElementById("erroreLogin").style.display="";
 				return false;
 		}

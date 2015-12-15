@@ -18,6 +18,7 @@ if(preg_match("/[^\040\pL\pN_-]/u", $term)) {
   exit;
 }
  $list = explode(" ",$term);
+
  $db = new Database();
  $db->connect();
  //$result = $db->getRelatori($term);

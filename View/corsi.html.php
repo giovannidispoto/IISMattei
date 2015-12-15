@@ -51,7 +51,7 @@
       </div>
 <?php endif;?>
       <h1>Bevenuto <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
-      <p>Scegli i corsi a cui vorresti iscriverti <?php echo"$day $date";?></p>
+      <p>Scegli i corsi a cui vorresti iscriverti <b><?php echo"$day $date";?></b></p>
         <!--Scelta corsi giorno 21-->
         <br>
           <div id="formCorsi" class="">

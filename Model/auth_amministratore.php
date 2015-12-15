@@ -12,8 +12,10 @@
                   $_SESSION['name'] = $response['name'];
                   $_SESSION['surname'] = $response['surname'];
                   $_SESSION['type'] = 'Amministratore';
-                header("Location:/AreaAmministrazione/");
-            }
+                header("Location: /AreaAmministrazione/");
+            }else{
+                 header("Location: index.php?error=user_not_found");
+               }
 
 
 

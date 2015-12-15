@@ -30,14 +30,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
      <style>
-    td{
-      padding:15px;
-      border-bottom:1px solid black;
-      font-size:150%;
-    }
-    tr{
-      
-    }
     </style>
   </head>
 
@@ -72,7 +64,8 @@
     <?php endif;?>
       <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
       <br>
-      <table>
+      <br>
+      <table class="table table-striped">
       <tr>
         <td><b> Cognome</b></td>
         <td><b> Nome </b> </td>

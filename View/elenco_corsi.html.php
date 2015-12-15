@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Riepilogo Corsi</title>
+    <title>IIS Iscrizione Corsi | Area Amministrazione</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">
@@ -29,12 +29,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    </script>
-    <style>
-    td{
-      padding:5px;
-    }
-    </style>
   </head>
 
   <body>
@@ -42,23 +36,56 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <a id="textNavBar" class="navbar-brand" href="#">IIS Iscrizione Corsi Autogestione</a>
         </div>
+        <div align="right" id="navbar" class="navbar-collapse collapse">
+
+
+        </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-      <div class="container" >
-      <h1>Corso creato con successo!</h1>
-      <p> Il corso <b>" <?php echo $descrizione?>"</b> è stato creato con successo</p>
+      <div class="container">
+      <h1>Elimina i corsi</h1>
+      <p>Puoi eliminare solo i corsi che non hanno iscritti!(tutti quelli che sono sotto)</p>
       <br>
       <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
+      <!-- Elenco corsi -->
+      <br>
+      <br>
+      <table class="table table-striped">
+        <tr>
+            <td><b>Corso </b></td>
+            <td><b> Relatore</b></td>
+            <td><b> Aula</b> </td>
+            <td><b> Data</b> </td>
+            <td><b> Ora Inizio</b> </td>
+            <td><b> Ora Fine</b></td>
+            <td></td>
+        </tr>
+      <?php foreach($result as $corso):?>
+        <tr>
+          <td><?php echo $corso['descrizione'];?></td>
+          <td><?php echo $corso['username_relatore'];?></td>
+          <td><?php echo $corso['aula'];?></td>
+          <td><?php echo changeFormatDate($corso['data']);?></td>
+          <td><?php echo dropSeconds($corso['ora_inizio']);?></td>
+          <td><?php echo dropSeconds($corso['ora_fine']);?></td>
+         <td><input type="button" style=""value="elimina" onclick="location.href='index.php?course=delete&delete=<?php echo $corso['id_corso']?>'" class="btn btn-primary"></td>
+      </tr>
+      <?php endforeach;?>
+      </table>
       </div>
-    </div>
-
+      </div>
       <hr>
-
       <footer>
         <p align="center">&copy; Giovanni Dispoto 2015 Company, Inc.</p>
       </footer>
@@ -73,6 +100,5 @@
     <script src="../View/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../View/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="../View/js/javascript.js"></script>
   </body>
 </html>

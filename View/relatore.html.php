@@ -54,9 +54,17 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-      <h1> Benvenuto <?php echo "$nome $cognome"?></h1> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-success">Logout</button>
-
-
+      <h1> Benvenuto <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
+      <p>Qui puoi vedere tutti i corsi di cui sei il relatore</p>
+      <br>
+      <ul class="list-group" style="font-size:140%">
+      <?php if(empty($courses)):?>
+        <p> Non ci sono corsi da mostrare</p>
+      <?exit;endif;?>
+      <?php foreach($courses as $cours):?>
+        <button type="button" onClick="location.href='index.php?show=<?php echo $cours['id_corso'];?>'" class="list-group-item"><?php echo $cours['descrizione'];?></button>
+      <?php endforeach;?>
+       </ul>
       </div>
     </div>
 

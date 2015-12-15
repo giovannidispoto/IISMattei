@@ -4,18 +4,16 @@ session_secure_start();
 
 if(isset($_GET['auth']) && !isset($_SESSION['id'])){
     if($_SESSION['token'] != $_POST['token']){
-      print $_SESSION['token']."<br>";
-      print $_POST['token'];
     die("Error with token!");
   }
 
-  if($_GET['auth'] == 'alunno' && isset($_POST['username']) && !empty($_POST['username'])){
-         if(isset($_POST['password']) && !empty($_POST['password'])){
+  if($_GET['auth'] == 'alunno' && isset($_POST['cod_matricola']) && !empty($_POST['cod_matricola'])){
+         if(isset($_POST['nome']) && !empty($_POST['nome'])){
+         		 if(isset($_POST['cognome']) && !empty($_POST['cognome'])){
                 include 'Model/auth_alunno.php';
-            }else{
-              header("Location: index.php?error=password");
+            	}else header("Location: index.php?error=login");
+           	 }else header("Location: index.php?error=login");
             }
-        }
 
 
 if($_GET['auth'] == 'amministratore' && isset($_POST['username']) && !empty($_POST['username'])){
@@ -26,12 +24,20 @@ if($_GET['auth'] == 'amministratore' && isset($_POST['username']) && !empty($_PO
               }
           }
 
+  if($_GET['auth'] == 'relatore' && isset($_POST['username']) && !empty($_POST['username'])){
+    if(isset($_POST['password']) && !empty($_POST['password'])){
+                  include 'Model/auth_relatore.php';
+              }else{
+                header("Location: index.php?error=password");
+              }
+          }
+
 }
 
   if(isset($_SESSION['id'])){
     if($_SESSION['type'] == 'Alunno') header("Location: AreaAlunni/");
     else if($_SESSION['type'] == 'Amministratore') header("Location: AreaAmministrazione/");
-    else header("Location: AreaRelatore/");
+    else header("Location: AreaRelatori/");
 
   }
   if(!isset($_SESSION['id']) && !isset($_GET['auth'])){

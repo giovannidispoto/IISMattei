@@ -56,17 +56,21 @@
       <div class="container">
       <h1> Benvenuto <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
       <p>Seleziona una opzione per vederne il contenuto<br><b>Da grandi poteri derivano grandi responsabilità</b></p>
+      <?php if(isset($_GET['error']) && $_GET['error'] == "imp_cancellare"):?>
+        <div class="alert alert-warning" id="erroreLogin">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Errore!<br></strong>Impossibile cancellare il corso!
+      </div>
+      <?endif;?>
       <br>
-        <div class="list-group">
-          <a href="index.php?elenco=all" class="list-group-item">Vedi l'elenco degli alunni</a>
-          <a href="index.php?elenco=not" class="list-group-item ">Vedi le persone non ancora iscritte</a>
-          <a href="index.php?course=create" class="list-group-item">Crea un nuovo corso</a>
-          <a href="#" class="list-group-item">Elimina un corso</a>
-           <a href="#" class="list-group-item">Modifica un corso</a>
-          <a href="#" class="list-group-item">Pensa ai Marò (Sempre)</a>
+        <ul class="list-group" style="font-size:140%">
+           <button type="button" onclick="location.href='index.php?elenco=all'" class="list-group-item">Vedi l'elenco degli alunni</button>
+           <button type="button" onclick="location.href='index.php?elenco=not'" class="list-group-item">Vedi le persone non ancora iscritte</button>
+           <button type="button" onclick="location.href='index.php?course=create'" class="list-group-item">Crea un nuovo corso</button>
+           <button type="button" onclick="location.href='index.php?course=delete'" class="list-group-item">Elimina un corso</button>
+         </ul>
         </div>
       </div>
-    </div>
 
       <hr>
 

@@ -38,16 +38,18 @@ include'../Helpers/helpers.php';
 										if(isset($_POST['relatore']) && !empty($_POST['relatore'])){
 											switch($_POST['relatore']){
 												case "rel-esistente":
+																						if(isset($_POST['username_relatore']) && !empty($_POST['username_relatore'])){
 																							if(isset($_POST['aula']) && !empty($_POST['aula'])){
 																								if(isset($_POST['data']) && !empty($_POST['data'])){
 																									if(isset($_POST['ora_inizio']) && !empty($_POST['ora_inizio'])){
 																										if(isset($_POST['ora_fine']) && !empty($_POST['ora_fine'])){
 																											include'../Model/create_course.php';
 																											include'../View/corso_creato.html.php';
-																										}
-																									}
-																								}
-																							}
+																										}else header("Location:index.php?course=create&error=riempi");
+																									}else header("Location:index.php?course=create&error=riempi");
+																								}else header("Location:index.php?course=create&error=riempi");
+																							}else header("Location:index.php?course=create&error=riempi");
+																						}else header("Location:index.php?course=create&error=riempi");
 																							break;
 												case "rel-nuovo":
 															if(isset($_POST['username_nuovo_relatore'])&& !empty($_POST['username_nuovo_relatore'])){
@@ -60,20 +62,26 @@ include'../Helpers/helpers.php';
 																										if(isset($_POST['ora_fine']) && !empty($_POST['ora_fine'])){
 																											include'../Model/create_relator_course.php';
 																											include'../View/corso_creato.html.php';
-																										}
-																									}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
+																										}else header("Location:index.php?course=create&error=riempi");
+																									}else header("Location:index.php?course=create&error=riempi");
+																								}else header("Location:index.php?course=create&error=riempi");
+																							}else header("Location:index.php?course=create&error=riempi");
+																						}else header("Location:index.php?course=create&error=riempi");
+																					}else header("Location:index.php?course=create&error=riempi");
+																				}else header("Location:index.php?course=create&error=riempi");
+																			}else header("Location:index.php?error=riempi");
 																					break;
 											}
-										}
-									}
-									header("Location:index.php");
-      				
+										}else header("Location:index.php?error=riempi");
+									}else header("Location:index.php");
+      	}else if(isset($_GET['course']) && $_GET['course'] == 'delete'){
+      			if(isset($_GET['course']) && !empty($_GET['delete'])){
+      				include '../Model/cancella_corso.php';
+      			}
+      				include '../Model/elenco_corsi.php';
+      				include '../View/elenco_corsi.html.php';
+      	}else if(isset($_GET['course']) && $_GET['course'] == 'edit'){
+      				die("Modifica");
       	}else{
         $nome = $_SESSION['name'];
         $cognome = $_SESSION['surname'];

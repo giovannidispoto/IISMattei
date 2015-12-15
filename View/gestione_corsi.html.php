@@ -37,9 +37,6 @@
     <![endif]-->
 
      <style>
-     .ui-autocomplete-loading {
-    background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
-  }
 
 .autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; }
 .autocomplete-suggestion { padding: 10px 5px; font-size: 1.2em; white-space: nowrap; overflow: hidden; }
@@ -76,10 +73,37 @@
           <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
           <br>
           <br>
+          <?php if(isset($_GET['error']) && $_GET['error'] == 'riempi'):?>
+             <div class="alert alert-warning" id="erroreCampi">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Riempi tutti i campi!
+            </div>
+          <?php endif;?>
+
+           <?php if(isset($_GET['error']) && $_GET['error'] == 'invalid_username'):?>
+             <div class="alert alert-warning" id="erroreUsername">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Username non valido
+            </div>
+          <?php endif;?>
+
+           <?php if(isset($_GET['error']) && $_GET['error'] = 'exist_username'):?>
+             <div class="alert alert-warning" id="erroreCampi">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>Username Esistente!
+            </div>
+          <?php endif;?>
+
             <div class="alert alert-warning" style="display:none" id="erroreCampi">
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Errore!<br></strong>Riempi tutti i campi!
             </div>
+
+             <div class="alert alert-warning" style="display:none" id="erroreUsernameEsistente">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Errore!<br></strong>L'username inserito è già stato utilizzato
+            </div>
+
            <div class="alert alert-warning" style="display:none" id="errorePassword">
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Errore!<br></strong>Le password non corrispondono!
@@ -106,8 +130,10 @@
             </div>
            <p><input type="radio" name="relatore" value="rel-nuovo" id="rel-nuovo" onclick="controlloAccount();"> Nuovo Account</p>            
             <div class="form-group" id="rel-nuovo-div">
-              <label for="labelUsername">Username </label>
-              <input type="text" class="form-control" name="username_nuovo_relatore" id="inputNuovoUsernameRelatore" placeholder="Username Relatore">
+              <div class="form-group" id="usernameDiv">
+                   <label for="labelUsername">Username </label>
+                    <input type="text" class="form-control" name="username_nuovo_relatore" id="inputNuovoUsernameRelatore" placeholder="Username Relatore">
+              </div>
               <label for="labelUsername">Nome </label>
               <input type="text" class="form-control" name="nome_relatore" id="inputNuovoNomeRelatore" placeholder="Nome Relatore">
               <label for="labelUsername">Cognome </label>
@@ -126,6 +152,7 @@
               <input type="text" class="form-control" name="max_iscritti" id="inputMaxIscritti" placeholder="Numero Massimo Iscritti">
             </div>
             <div class="form-group">
+     
                  <label for="labelData">Data </label>
                   <div class='input-group date' id='datepicker1'>
                       <input type='text' class="form-control" name="data" id="inputData" placeholder="Data"/>
@@ -133,6 +160,7 @@
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
                    </div>
+      
               </div>
             <div class="form-group">
               <label for="inputOraInizio">Ora Inizio</label>
@@ -146,7 +174,7 @@
               <select class="form-control" name="ora_fine" id="ora_fine">
               </select>
             </div>
-            <button type="submit" onClick="return checkForm();"class="btn btn-default">Submit</button>
+            <button type="submit" onClick="alert(ajax());return checkForm();"class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
@@ -192,9 +220,39 @@
                     }
                 }))
             }, "json");
-        },
-        minLenght:2
+        }
      });
+    $("#inputNuovoUsernameRelatore").keydown(function (e){
+        if(e.keyCode == 13){
+          ajaxCall();
+        }
+    });
+
+    $("#inputNuovoUsernameRelatore").focusout(function(){
+        ajaxCall();
+    });
+
+    function ajaxCall(){
+        var term =  $("#inputNuovoUsernameRelatore").val();
+          var richiesta = $.ajax({
+                url: "../Model/controllo_username.php",
+                type: "GET",
+                data: "username="+term,
+                dataType: "html",
+                success: function (risposta){
+                  if(risposta == "false"){
+                        $("#usernameDiv").attr("class","form-group has-error");
+                  }else if(risposta == "true"){
+                            $("#usernameDiv").attr("class","form-group has-success");
+                  }
+
+                },
+                error: function(){
+                  alert("Chiamata Fallita!");
+                }
+          });
+    }
+     
 
      function controlloOra(){
         var inizio = document.getElementById("ora_inizio");
@@ -250,6 +308,10 @@
                                   if(isNaN(document.getElementById('inputMaxIscritti').value.trim())){
                                     document.getElementById('inputMaxIscritti').value="";
                                      document.getElementById('erroreMaxIscritti').style.display="";
+                                     return false;
+                                  }
+                                  if(document.getElementById('usernameDiv').getAttribute("class") == "form-group has-error"){
+                                     document.getElementById('erroreUsernameEsistente').style.display="";
                                      return false;
                                   }
                                   if(document.getElementById('inputNuovoPasswordRelatore').value.trim() != document.getElementById('inputNuovoPassword2Relatore').value.trim()){

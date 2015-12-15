@@ -21,6 +21,11 @@
     <link href="View/jumbotron.css" rel="stylesheet">
     <script src="View/js/ie-emulation-modes-warning.js"></script>
 
+    <style>
+  .center-block {float: none !important}
+
+    </style>
+
   </head>
 
   <body onLoad="checkError();">
@@ -45,31 +50,64 @@
           <strong>Errore!<br></strong>Riempi i campi username e password!
       </div>
 
-        <div id="loginAlunno" align="center">
-        <form class="navbar-form navbar-right" action="?auth=alunno" method="post" >
-          <div>
-            <a>Area login Alunno</a><br><br>
+      <?php if(isset($_GET['error']) && $_GET['error'] = "user_not_found"):?>
+             <div class="alert alert-warning" id="erroreLogin">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Errore!<br></strong>Utente non trovato!
+      </div>
+      <?php endif;?>
+
+
+        <div id="loginAlunno" class = "row center-block">
+          <form action="?auth=alunno" method="post">
+            <div>
+              <a>Login Alunno</a><br><br>
+            </div>
+              <input type="text" placeholder="Matricola alunno" name="cod_matricola" id="cod_matricola" class="form-control"><br><br>
+              <input type="text" placeholder="Nome" name = "nome" id="nome" class="form-control"><br><br>
+              <input type="text" placeholder="Cognome" name = "cognome" id="cognome" class="form-control"><br><br>
+              <input type="hidden" name="token" value="<?php echo $token?>">
+            <button type="submit" onClick="return controlloFormLogin();" class="btn btn-success">Entra</button>
+           <div style="float:right">
+            <input type="button" onClick="cambia('amm')" value="Sei un admin?" class="btn btn-success">
+            <input type="button" onClick="cambia('rel')"  class="btn btn-success" value="Sei un relatore?">
+             </div>
+          </form>
           </div>
-            <input type="text" placeholder="Matricola alunno" name="username" id="username" class="form-control"><br><br>
-            <input type="password" placeholder="Password" name = "password" id="password" class="form-control"><br><br>
+        </div>
+
+
+
+        <div id="loginAmministratore" class="row center-block" style="display:none">
+        <form action="?auth=amministratore"  method="post">
+          <div>
+            <a>Login Amministratore</a><br><br>
+          </div>
+            <input type="text" placeholder="username" name="username" id="usernameAmm" class="form-control"><br><br>
+            <input type="password" placeholder="Password" name="password" id="passwordAmm" class="form-control"><br><br>
             <input type="hidden" name="token" value="<?php echo $token?>">
-          <button type="submit" onClick="return controlloFormLogin();" class="btn btn-success">Entra</button>
-          <button onClick="Cambia();" type="submit" class="btn btn-success">Sei un docente?</button>
+          <button type="submit" class="btn btn-success" onClick="return controllo('amm');">Entra</button>
+          <div style="float:right">
+          <input type="button" onClick="cambia('alu');" value="Sei un alunno?" class="btn btn-success">
+          <input type="button" onClick="cambia('rel')" value="Sei un relatore?" class="btn btn-success">
+          </div>
         </form>
         </div>
 
 
 
-        <div id="loginDocente" align="center">
-        <form action="?auth=amministratore" class="navbar-form navbar-right" method="post">
+        <div id="loginRelatore" class="row center-block" style="display:none">
+        <form action="?auth=relatore" method="post">
           <div>
-            <a>Area login Amministratore</a><br><br>
+            <a>Login Relatore</a><br><br>
           </div>
-            <input type="text" placeholder="Codice docente" name="username" class="form-control"><br><br>
-            <input type="password" placeholder="Password" name="password" class="form-control"><br><br>
+            <input type="text" placeholder="username" name="username" id="username" class="form-control"><br><br>
+            <input type="password" placeholder="Password" name="password" id="password" class="form-control"><br><br>
             <input type="hidden" name="token" value="<?php echo $token?>">
-          <button type="submit" class="btn btn-success">Entra</button>
-          <button onClick="Cambia();" type="submit" class="btn btn-success">Sei un alunno?</button>
+          <button type="submit" class="btn btn-success" onClick="return controllo('rel');">Entra</button>
+          <div style="float:right">
+          <input type="button" onClick="cambia('alu');" value="Sei un alunno?" class="btn btn-success">
+          <input type="button" onClick="cambia('amm')" value="Sei un admin?" class="btn btn-success">
         </form>
         </div>
 
@@ -94,5 +132,46 @@
     <script src="View/js/ie10-viewport-bug-workaround.js"></script>
     <script src="View/js/javascript.js"></script>
     <script src="View/js/javascriptHome.js"></script>
+    <script>
+
+    function controllo(type){
+      switch (type){
+        case 'amm':var username = document.getElementById("usernameAmm");
+                   var password = document.getElementById("passwordAmm");
+                    break;
+        case 'rel':var username = document.getElementById("username");
+                   var password = document.getElementById("password");
+                    break;
+      }
+          if(username.value.length == 0 && password.value.length == 0){
+            document.getElementById("erroreLogin").style.display="";
+            return false;
+          }
+          return true;
+    }
+
+    function cambia(type){
+      var amm = document.getElementById('loginAmministratore');
+      var rel = document.getElementById('loginRelatore');
+      var alu = document.getElementById('loginAlunno');
+      switch(type){
+        case 'amm': nascondiTutto();
+                    amm.style.display="";
+                    break;
+        case 'rel':nascondiTutto();
+                    rel.style.display="";
+                    break;
+        case 'alu':nascondiTutto();
+                    alu.style.display="";
+                    break;
+      }
+    }
+
+    function nascondiTutto(){
+       document.getElementById('loginAmministratore').style.display="none";
+       document.getElementById('loginRelatore').style.display="none";
+       document.getElementById('loginAlunno').style.display="none";
+    }
+    </script>
   </body>
 </html>

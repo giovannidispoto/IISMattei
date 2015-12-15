@@ -12,8 +12,8 @@
               $_SESSION['name'] = $response['name'];
               $_SESSION['surname'] = $response['surname'];
               $_SESSION['type'] = "Relatore";
-              header("Location: AreaRelatori/index.php");
-            }
+              header("Location: /AreaRelatori/index.php");
+            }header("Location: index.php?error=login");
 
 
 

@@ -14,7 +14,20 @@
 				return $result;
 			}
 
-function escape_string($string) {
-    $regex = "/[\\+\\-\\=\\&\\|\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\<\\>\\?\\:\\\\\\/]/";
-    return preg_replace($regex, addslashes('\\$0'), $string);
-}
+		function escape_string($string) {
+		    $regex = "/[\\+\\-\\=\\&\\|\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\<\\>\\?\\:\\\\\\/]/";
+		    return preg_replace($regex, addslashes('\\$0'), $string);
+		}
+
+		function changeFormatDate($date){
+			list($dd,$mm,$yyyy) = explode('-',$date);
+			$result = "$dd/$mm/$yyyy";
+			return $result;
+		}
+
+		function dropSeconds($hour){
+			list($hours,$minutes,$seconds) = explode(':',$hour);
+			$result = "$hours:$minutes";
+			return $result;
+		}
+

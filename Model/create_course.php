@@ -23,7 +23,7 @@
 			$db->connect();
 			$result = $db->checkRelatore($username_relatore);
 
-			if(!$result) header("Location: index.php?error=invalid_username");
+			if(!$result) header("Location: index.php?course=create&error=invalid_username");
 
 			$aula = intval($_POST['aula']) or die("L'aula è numerica!<br> Qualcosa è andato storto!");
 			$max_iscritti = intval($_POST['max_iscritti']) or die("il numero max di iscritti è numerico <br> Qualcosa è andato storto!");

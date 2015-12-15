@@ -1,5 +1,6 @@
 <?php
       include '../Helpers/secure_session.php';
+      include '../Class/Database.class.php';
       session_secure_start();
 
 	   if(isset($_GET["logout"])){
@@ -22,10 +23,15 @@
       }
 
       if(isset($_SESSION['id']) && $_SESSION['type'] == 'Relatore'){
-         	$nome = $_SESSION['nome'];
-         	$cognome = $_SESSION['cognome'];
+      	if(isset($_GET['show']) && !empty($_GET['show'])){
+      			include '../Model/elenco_alunni_corso.php';
+      			include '../View/elenco_alunni_corso.html.php';
+      	}else{
+         	$nome = $_SESSION['name'];
+         	$cognome = $_SESSION['surname'];
+         	include '../Model/lista_corsi.php';
          	include '../View/relatore.html.php';
-
+         }
       }
      
   ?>
