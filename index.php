@@ -1,6 +1,7 @@
 <?php
 include 'Helpers/secure_session.php';
 session_secure_start();
+define("INCLUDED",1);
 
 if(isset($_GET['auth']) && !isset($_SESSION['id'])){
     if($_SESSION['token'] != $_POST['token']){

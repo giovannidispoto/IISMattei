@@ -1,3 +1,6 @@
+<?php 
+@defined('INCLUDED') or die("Impossibile accedere al file");
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +12,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Riepilogo Corsi</title>
+    <title>Riepilogo Corsi | Area Alunni</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">

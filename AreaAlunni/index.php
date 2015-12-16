@@ -3,6 +3,7 @@ include '../Helpers/secure_session.php';
 include'../Class/Database.class.php';
 include'../Helpers/helpers.php';
   session_secure_start();
+  define("INCLUDED",1);
 
   if(isset($_GET["logout"])){
     $_SESSION = array();

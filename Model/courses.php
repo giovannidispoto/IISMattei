@@ -1,5 +1,5 @@
 <?php
-
+@defined('INCLUDED') or die("Impossibile accedere al file");
     $nome = $_SESSION["name"];
     $cognome = $_SESSION["surname"];
     $db = new Database();
@@ -33,10 +33,32 @@
     						$day = getDay($date);
     						
     						break;
-    		case 3:$corsi = $db->getSubscribedCourses($_SESSION['id']);
+    		case 3:    $corsi = $db->getSubscribedCourses($_SESSION['id']);
     						break;
 
     }
+
+    switch($_SESSION['giorno']){
+        case 0:
+        case 1:
+        case 2:
+                 foreach($courses as $course){
+                        if($db->corsoPieno($course['id'])){
+                             continue;
+                               
+                        }else {
+                            $corsi[] = array(
+                                    'id' => $course['id'],
+                                    'descrizione' => $course['descrizione'],
+                                    'ora_inizio' => $course['ora_inizio'],
+                                    'ora_fine' => $course['ora_fine'],
+                                            );
+                        }
+                    }
+                    break;
+           
+          }
+
   	
   	
 

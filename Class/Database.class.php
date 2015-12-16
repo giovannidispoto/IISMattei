@@ -1,5 +1,4 @@
 <?php
-
 class Database{
 
 	private $host = "localhost";
@@ -198,12 +197,11 @@ class Database{
 		}
 			if($stmt->rowCount() > 0){
 			while($row = $stmt->fetch()){
-					if($row['max_iscritti'] > $row['numero iscritti']){
-						return true;
+					if($row['max_iscritti'] > $row['numero_iscritti']){
+						return false;
 					}
-					return false;
+					return true;
 			}
-			if(isset($subscribed)) return $subscribed;
 		}
 	}
 
@@ -236,7 +234,7 @@ class Database{
 					$stmt->execute();
 					$stmt = $this->pdo->query("SELECT ROW_COUNT() as inseriti");
 				}catch(PDOException $e){
-					echo "Error<br>";
+					echo "Errore nell'iscrizione";
 				}
 				while($result = $stmt->fetch()){
 					if($result['inseriti'] > 0) return true;

@@ -12,7 +12,7 @@
 									[ora_inizio] => 8.30 
 									[ora_fine] => 10.55 ) 
 			*/
-			
+@defined('INCLUDED') or die("Impossibile accedere al file");
 			$descrizione = htmlspecialchars($_POST['descrizione'],ENT_QUOTES,"utf-8");
 			$descrizione = escape_string($descrizione);
 

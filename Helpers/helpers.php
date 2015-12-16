@@ -1,6 +1,6 @@
 <?php
 			function getDay($date){
-				$days = array ("Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì",    "Venerdì","Sabato"); 
+				$days = array ("Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì","Sabato"); 
 				list($yyyy,$mm,$dd) = explode('/',$date);
 				$numbrdayweek = date("w",mktime(0,0,0,$mm, $dd, $yyyy)); 
 

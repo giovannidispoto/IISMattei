@@ -1,3 +1,6 @@
+<?php 
+@defined('INCLUDED') or die("Impossibile accedere al file");
+?>
 <html>
   <head>
       <title>Bevenuto</title>

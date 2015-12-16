@@ -1,3 +1,6 @@
+<?php 
+@defined('INCLUDED') or die("Impossibile accedere al file");
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -165,8 +168,8 @@
             <div class="form-group">
               <label for="inputOraInizio">Ora Inizio</label>
               <select onClick="controlloOra();"class="form-control" name="ora_inizio" id="ora_inizio">
-                <option value="8:30:00">8:30</option>
-                <option value="10:55:00">10:55</option>
+                <option value="9:05:00">9:05</option>
+                <option value="11:10:00">11:10</option>
               </select>
             </div>
              <div class="form-group">
@@ -232,6 +235,8 @@
         ajaxCall();
     });
 
+    $('#inputData').focusout(controlloData());
+
     function ajaxCall(){
         var term =  $("#inputNuovoUsernameRelatore").val();
           var richiesta = $.ajax({
@@ -252,21 +257,48 @@
                 }
           });
     }
+
+    function controlloData(){
+      var data = document.getElementById("inputData");
+      var fine = document.getElementById("ora_fine");
+      if(data.value == "2015-12-23"){
+        outputFine += "<option value='11:00:00'>11:00</option>";
+        outputFine += "<option value='12:30:00'>12.30</option>";
+        fine.innerHTML=output;
+      }
+
+    }
      
 
      function controlloOra(){
         var inizio = document.getElementById("ora_inizio");
         var ora = inizio.options[inizio.selectedIndex].text;
         var fine = document.getElementById("ora_fine");
+        var data = document.getElementById("inputData");
+        var inizio = document.getElementById("ora_inizio");
+        var fine = document.getElementById("ora_fine");
         var output = "";
-        switch(ora){
-            case '8:30':  output += "<option value='10:55:00'>10.55</option>";
-                          output += "<option value='13:00:00'>13.00</option>";
+        if(data.value=="2015-12-23"){
+          switch(ora){
+            case '9:05':  output += "<option value='11:00:00'>11:00</option>";
+                          output += "<option value='12:30:00'>12.30</option>";
                           break;
-            case '10:55':
-                          output += "<option value='13:00:00'>13.00</option>";
+            case '11:10':
+                          output += "<option value='12:30:00'>12:30</option>";
                           break;
+           
         }
+        }else{
+      switch(ora){
+            case '9:05':  output += "<option value='11:00:00'>11:00</option>";
+                          output += "<option value='12:50:00'>12.50</option>";
+                          break;
+            case '11:10':
+                          output += "<option value='12:50:00'>12:50</option>";
+                          break;
+           
+        }
+      }
         fine.innerHTML=output;
      }
 

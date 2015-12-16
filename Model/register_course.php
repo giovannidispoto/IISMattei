@@ -1,4 +1,5 @@
 <?php
+@defined('INCLUDED') or die("Impossibile accedere al file");
 	$db = new Database();
 	$db->connect();
 	if($_GET['register'] != $_SESSION['giorno']) header("Location:".$_SERVER['PHP_SELF']);

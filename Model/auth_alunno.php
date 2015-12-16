@@ -1,4 +1,5 @@
 <?php
+@defined('INCLUDED') or die("Impossibile accedere al file");
   include 'Class/Database.class.php';
   include 'Helpers/helpers.php';
 
