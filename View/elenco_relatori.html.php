@@ -12,7 +12,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Riepilogo Corsi</title>
+    <title>IIS Iscrizione Corsi | Area Amministrazione</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../View/css/bootstrap.min.css" rel="stylesheet">
@@ -32,12 +32,6 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    </script>
-    <style>
-    td{
-      padding:5px;
-    }
-    </style>
   </head>
 
   <body>
@@ -45,25 +39,56 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <a id="textNavBar" class="navbar-brand" href="#">IIS Iscrizione Corsi Autogestione</a>
         </div>
+        <div align="right" id="navbar" class="navbar-collapse collapse">
+
+
+        </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-      <div class="container" >
-      <h1>Corso creato con successo!</h1>
-      <p> Il corso <b>" <?php echo $descrizione?>"</b> è stato creato con successo</p>
+      <div class="container">
+      <h1>Elimina i Relatori</h1>
+      <p>Puoi eliminare solo i relatori che non hanno corsi!(tutti quelli che sono sotto)</p>
       <br>
       <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
+      <!-- Elenco corsi -->
+      <br>
+      <br>
+      <?php if(empty($relatori)):?>
+        <br>
+        <p><b> Non ci sono Relatori da mostrare</b></p>
+      <?php else:?>
+      <table class="table table-striped">
+        <tr>
+            <td><b> username </b></td>
+            <td><b> Nome </b></td>
+            <td><b> Cognome</b> </td>
+            <td></td>
+        </tr>
+      <?php foreach($relatori as $relatore):?>
+        <tr>
+          <td><?php echo $relatore['username'];?></td>
+          <td><?php echo $relatore['nome'];?></td>
+          <td><?php echo $relatore['cognome'];?></td>
+         <td><input type="button" style=""value="elimina" onclick="location.href='index.php?elenco=relatori&delete=<?php echo $relatore['username']?>'" class="btn btn-primary"></td>
+      </tr>
+      <?php endforeach;endif;?>
+      </table>
       </div>
-    </div>
-
+      </div>
       <hr>
-
       <footer>
-        <p align="center" style="font-size:20px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:20px">Giovanni Dispoto</a></p>
+       <p align="center" style="font-size:20px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:20px">Giovanni Dispoto</a></p>
       </footer>
     </div> <!-- /container -->
 
@@ -76,6 +101,5 @@
     <script src="../View/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../View/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="../View/js/javascript.js"></script>
   </body>
 </html>

@@ -21,7 +21,7 @@
     <link href="View/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="View/jumbotron.css" rel="stylesheet">
+    <link href="View/css/jumbotron.css" rel="stylesheet">
     <script src="View/js/ie-emulation-modes-warning.js"></script>
 
     <style>
@@ -69,7 +69,6 @@
               <input type="text" placeholder="Matricola alunno" name="cod_matricola" id="cod_matricola" class="form-control"><br><br>
               <input type="text" placeholder="Nome" name = "nome" id="nome" class="form-control"><br><br>
               <input type="text" placeholder="Cognome" name = "cognome" id="cognome" class="form-control"><br><br>
-              <input type="hidden" name="token" value="<?php echo $token?>">
             <button type="submit" onClick="return controlloFormLogin();" class="btn btn-success">Entra</button>
            <div style="float:right">
             <input type="button" onClick="cambia('amm')" value="Sei un admin?" class="btn btn-success">
@@ -120,7 +119,7 @@
       <hr>
 
       <footer>
-        <p align="center">&copy; Giovanni Dispoto 2015 Company, Inc.</p>
+        <p align="center" style="font-size:20px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:20px">Giovanni Dispoto</a></p>
       </footer>
     </div> <!-- /container -->
 
@@ -134,7 +133,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="View/js/ie10-viewport-bug-workaround.js"></script>
     <script src="View/js/javascript.js"></script>
-    <script src="View/js/javascriptHome.js"></script>
     <script>
 
     function controllo(type){

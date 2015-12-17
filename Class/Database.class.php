@@ -22,7 +22,6 @@ class Database{
 
 	function authAlunno($cod_matricola,$nome,$cognome){
 			$sql = "SELECT * FROM Alunni A WHERE A.cod_matricola = :cod_matricola and A.nome like :nome and A.cognome like :cognome ";
-			//$password = hash("sha512",$password);
 		try{
 				$stmt = $this->pdo->prepare($sql);
 				$stmt->bindValue(":cod_matricola",$cod_matricola);
@@ -48,7 +47,7 @@ class Database{
 	function authAmministratore($username, $password){
 			$sql = "SELECT Nome,Cognome, A.username FROM Amministratori A INNER JOIN LoginAmministratori L ON A.username= L.username_amministratore WHERE A.username= :username and L.pass = :password";
 
-			//$password = hash("sha512",$password);
+			$password = hash("sha512",$password);
 			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
 				$stmt = $this->pdo->prepare($sql);
@@ -75,7 +74,7 @@ class Database{
 	function authRelatore($username, $password){
 			$sql = "SELECT R.nome,R.cognome,R.username FROM Relatori R INNER JOIN LoginRelatori L ON R.username = L.username_relatore WHERE R.username= :username and L.pass = :password ";
 
-			//$password = hash("sha512",$password);
+			$password = hash("sha512",$password);
 			$username = htmlspecialchars($username, ENT_QUOTES, "utf-8");
 		try{
 				$stmt = $this->pdo->prepare($sql);
@@ -345,7 +344,7 @@ class Database{
 	function createRelatore($username_relatore,$nome_relatore,$cognome_relatore,$password_relatore){
 		$sql = "INSERT INTO Relatori(username,nome,cognome) VALUES (:username_relatore, :nome_relatore,:cognome_relatore)";
 		$sql2 = "INSERT INTO LoginRelatori (username_relatore, pass) VALUES (:username_relatore, :password_relatore)";
-
+		$password_relatore = hash("sha512",$password_relatore);
 		try{
 				$stmt = $this->pdo->prepare($sql);
 				$stmt->bindValue(":username_relatore",$username_relatore);
@@ -384,6 +383,30 @@ class Database{
 
 		if($stmt->rowCount() > 0) return true;
 		return false;
+	}
+
+	function deleteRelatore($username){
+		$sql = "DELETE FROM Relatori WHERE username = :username and username in(SELECT * FROM (SELECT R.username FROM Relatori R WHERE R.username NOT IN (SELECT Re.username FROM Relatori Re, Corsi C WHERE Re.username = C.username_relatore )) Tbltb)";
+		try{
+				$stmt = $this->pdo->prepare($sql);
+				$stmt->bindValue(":username",$username);
+				$stmt->execute();
+		}catch(PDOException $e){
+			echo "Errore nel cancellare il relatore".$e->getMessage();
+		}
+		if($stmt->rowCount() > 0) return true;
+		else return false;
+	}
+
+	function getListaRelatori(){
+		$sql = "SELECT * FROM Relatori WHERE username not in(SELECT username FROM Relatori INNER JOIN Corsi ON username = username_relatore)";
+		try{
+				$result = $this->pdo->query($sql);
+		}catch(PDOException $e){
+			echo "Errore nell'ottenimento dei Relatori";
+		}
+		$relatori = $result->fetchAll();
+		return $relatori;
 	}
 
 	function deleteCourse($id_corso){

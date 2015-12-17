@@ -43,7 +43,7 @@ CREATE TABLE LoginAlunni(
 cod_matricola int not null,
 pass varchar(255) not null,
 PRIMARY KEY(cod_matricola),
-FOREIGN KEY(cod_matricola) references Alunni(cod_matricola)
+FOREIGN KEY(cod_matricola) references Alunni(cod_matricola) 
 )DEFAULT CHARSET="utf8" ENGINE=InnoDB;
 
 CREATE TABLE LoginAmministratori(
@@ -56,8 +56,8 @@ FOREIGN KEY(username_amministratore) references Amministratori(username)
 CREATE TABLE LoginRelatori(
 username_relatore varchar(255) not null,
 pass varchar(255) not null,
-PRIMARY KEY(username_relatore),
-FOREIGN KEY(username_relatore) references Relatori(username)
+PRIMARY KEY(username),
+FOREIGN KEY(username_relatore) references Relatori(username) ON DELETE CASCADE
 )DEFAULT CHARSET="utf8" ENGINE=InnoDB;
 
 INSERT INTO Alunni(cod_matricola,nome,cognome,classe,stato_registrazione) VALUES

@@ -21,7 +21,7 @@
     <link href="../View/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../View/jumbotron.css" rel="stylesheet">
+    <link href="../View/css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -53,7 +53,7 @@
           <strong>Errore!<br></strong>Il corso <?php echo $corso_pieno?> è pieno;
       </div>
 <?php endif;?>
-      <h1>Bevenuto <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
+      <h1>Ciao, <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
       <p>Scegli i corsi a cui vorresti iscriverti <b><?php echo"$day $date";?></b></p>
         <!--Scelta corsi giorno 21-->
         <br>
@@ -138,7 +138,7 @@
       <hr>
 
       <footer>
-        <p align="center">&copy; Giovanni Dispoto 2015 Company, Inc.</p>
+       <p align="center" style="font-size:20px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:20px">Giovanni Dispoto</a></p>
       </footer>
     </div> <!-- /container -->
 

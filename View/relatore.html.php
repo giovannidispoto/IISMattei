@@ -21,7 +21,7 @@
     <link href="../View/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../View/jumbotron.css" rel="stylesheet">
+    <link href="../View/css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -57,7 +57,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-      <h1> Benvenuto <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
+      <h1> Ciao, <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
       <p>Qui puoi vedere tutti i corsi di cui sei il relatore</p>
       <br>
       <ul class="list-group" style="font-size:140%">
@@ -74,7 +74,7 @@
       <hr>
 
       <footer>
-        <p align="center">&copy; Giovanni Dispoto 2015 Company, Inc.</p>
+       <p align="center" style="font-size:20px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:20px">Giovanni Dispoto</a></p>
       </footer>
     </div> <!-- /container -->
 

@@ -34,6 +34,12 @@ include'../Helpers/helpers.php';
 		      		include '../View/elenco_alunni.html.php';
       	}else if(isset($_GET['course']) && $_GET['course'] == "create"){
       			include '../View/gestione_corsi.html.php';
+      	}else if(isset($_GET['elenco']) && $_GET['elenco'] == 'relatori'){
+      		if(isset($_GET['delete']) && !empty($_GET['delete'])){
+      			include '../Model/elimina_relatore.php';
+      		}
+      			include '../Model/elenco_relatori.php';
+      			include '../View/elenco_relatori.html.php';
       	}else if(isset($_GET['course']) && $_GET['course'] == "new_course"){
 								   if(isset($_POST['descrizione']) && !empty($_POST['descrizione'])){
 										if(isset($_POST['relatore']) && !empty($_POST['relatore'])){

@@ -21,7 +21,7 @@
     <link href="../View/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../View/jumbotron.css" rel="stylesheet">
+    <link href="../View/css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -57,7 +57,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-      <h1> Benvenuto <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
+      <h1>Ciao, <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
       <p>Seleziona una opzione per vederne il contenuto<br><b>Da grandi poteri derivano grandi responsabilità</b></p>
       <?php if(isset($_GET['error']) && $_GET['error'] == "imp_cancellare"):?>
         <div class="alert alert-warning" id="erroreLogin">
@@ -69,6 +69,7 @@
         <ul class="list-group" style="font-size:140%">
            <button type="button" onclick="location.href='index.php?elenco=all'" class="list-group-item">Vedi l'elenco degli alunni</button>
            <button type="button" onclick="location.href='index.php?elenco=not'" class="list-group-item">Vedi le persone non ancora iscritte</button>
+            <button type="button" onclick="location.href='index.php?elenco=relatori'" class="list-group-item">Elimina un relatore</button>
            <button type="button" onclick="location.href='index.php?course=create'" class="list-group-item">Crea un nuovo corso</button>
            <button type="button" onclick="location.href='index.php?course=delete'" class="list-group-item">Elimina un corso</button>
          </ul>
@@ -78,7 +79,7 @@
       <hr>
 
       <footer>
-        <p align="center">&copy; Giovanni Dispoto 2015 Company, Inc.</p>
+       <p align="center" style="font-size:15px">Developed by <a href="http://www.giovannidispoto.it/" target="_blank" style="font-size:15px">Giovanni Dispoto</a></p>
       </footer>
     </div> <!-- /container -->
 
