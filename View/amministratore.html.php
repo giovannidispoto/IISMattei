@@ -57,14 +57,14 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-      <h1>Ciao, <?php echo "$nome $cognome"?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
+      <h1>Ciao, <?php echo stripslashes($nome)." ".stripslashes($cognome)?> <button type="submit" onClick ="location.href='index.php?logout'" class="btn btn-warning">Logout</button></h1>
       <p>Seleziona una opzione per vederne il contenuto<br><b>Da grandi poteri derivano grandi responsabilità</b></p>
       <?php if(isset($_GET['error']) && $_GET['error'] == "imp_cancellare"):?>
         <div class="alert alert-warning" id="erroreLogin">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Errore!<br></strong>Impossibile cancellare il corso!
       </div>
-      <?endif;?>
+      <?php endif;?>
       <br>
         <ul class="list-group" style="font-size:140%">
            <button type="button" onclick="location.href='index.php?elenco=all'" class="list-group-item">Vedi l'elenco degli alunni</button>

@@ -5,13 +5,22 @@
 	if($_GET['register'] != $_SESSION['giorno']) header("Location:".$_SERVER['PHP_SELF']);
 	switch($_POST['divisioneCorsi']){
 		case "completo":
+
 										if($_SESSION['giorno'] == 3) break;
+										if(!isset($_POST['corso']) || empty($_POST['corso'])){
+											header("Location:index.php?errore=seleziona_un_corso");
+											exit;
+										}
 										$corso = intval($_POST['corso']) or die("Errore!");
 									 	$result = $db->subscribe($_SESSION['id'],$corso);
 									 	if(!$result) exit(header("Location: index.php?corso_pieno=$corso"));
 											break;
 		case "diviso":
 									if($_SESSION['giorno'] == 3) break;
+									if(!isset($_POST['corsoPrimaMezza']) || empty($_POST['corsoPrimaMezza']) || !isset($_POST['corsoSecondaMezza']) || empty($_POST['corsoSecondaMezza'])){
+										header("Location:index.php?errore=seleziona_un_corso");
+										exit;
+									}
 									$corsoPrimaMezza = intval($_POST['corsoPrimaMezza']) or die("Errore!");
 									$result = $db->subscribe($_SESSION['id'],$corsoPrimaMezza);
 									if(!$result) exit(header("Location: index.php?corso_pieno=$corsoPrimaMezza"));
@@ -19,6 +28,7 @@
 									 	$corsoSecondaMezza = intval($_POST['corsoSecondaMezza']) or die("Errore!");
 									 	$result = $db->subscribe($_SESSION['id'],$corsoSecondaMezza);
 									 	if(!$result) exit(header("Location: index.php?corso_pieno=$corsoSecondaMezza"));
+									 
 										break;
 		default:	die("Errore");
 							break;

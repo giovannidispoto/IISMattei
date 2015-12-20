@@ -76,8 +76,8 @@
       </tr>
       <?php foreach($alunni as $alunno){
             echo "<tr>";
-            echo "<td>".$alunno['cognome']."</td>";
-            echo "<td>".$alunno['nome']."</td>";
+            echo "<td>".stripslashes($alunno['cognome'])."</td>";
+            echo "<td>".stripslashes($alunno['nome'])."</td>";
             echo "<td>".$alunno['classe']."</td>";
             echo "</tr>";
         } 

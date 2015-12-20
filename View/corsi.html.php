@@ -53,7 +53,14 @@
           <strong>Errore!<br></strong>Il corso <?php echo $corso_pieno?> è pieno;
       </div>
 <?php endif;?>
-      <h1>Ciao, <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
+
+<?php if(isset($_GET['errore']) && $_GET['errore'] == "seleziona_un_corso"):?>
+    <div class="alert alert-warning" id="erroreLogin">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Errore!<br></strong>Seleziona un corso
+      </div>
+<?php endif;?>
+      <h1>Ciao, <?php echo stripslashes($nome)." ".stripslashes($cognome);?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
       <p>Scegli i corsi a cui vorresti iscriverti <b><?php echo"$day $date";?></b></p>
         <!--Scelta corsi giorno 21-->
         <br>
@@ -63,73 +70,86 @@
                   <!-- Lista Corsi-->
                  <p style="margin-left:-10px"><input type="radio" name="divisioneCorsi" id="completo" value="completo" onClick="nascondi()" checked><b>&nbspCorsi tutta la giornata</b></p>
                  <div id="corsiTuttoIlGiorno" style="text-align: left;"> 
+                 <?php if(!isset($corsi) || empty($corsi)):?>
+                 <p>Non ci sono corsi da mostrare</p>
+               <?php else:?>
                   <?php $primo = true;
                        foreach($corsi as $course){
                         if($day == 'Mercoledì'){
                         if($course['ora_inizio'] == "09:05" && $course['ora_fine'] == "12:30"){
                           if($primo){
                             echo "<p>Corsi per tutta la giornata (09:05,12:30)</p>";
-                            echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata' checked>&nbsp".$course['descrizione']."</input><br>";
+                            echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata' checked>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                             $primo = false;
                           }else{
-                         echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata'>&nbsp".$course['descrizione']."</input><br>";
+                         echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata'>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                          }
                        }
                         }else if($course['ora_inizio'] == "09:05" && $course['ora_fine'] == "12:50"){
                           if($primo){
                             echo "<p>Corsi per tutta la giornata (09:05,12:50)</p>";
-                            echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata' checked>&nbsp".$course['descrizione']."</input><br>";
+                            echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata' checked>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                             $primo = false;
                           }else{
-                         echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata'>&nbsp".$course['descrizione']."</input><br>";
+                         echo "<input type='radio' name='corso' value='".$course['id']."' id ='corsoGiornata'>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                        }
                     }
                   }?>
+                  <?php endif;?>
                   </div>
 
                   <br>
           <p style="margin-left:-10px"><input type="radio" name="divisioneCorsi" id="diviso" value="diviso"onClick="nascondi()"><b>&nbspCorsi divisi</b></p>
 
                   <div id="corsiPrimaParte">
+                   <?php if(!isset($corsi) || empty($corsi)):?>
+                 <p>Non ci sono corsi da mostrare</p>
+               <?php else:?>
                   <?php $primo = true;
                       foreach($corsi as $course){
                     if($course['ora_inizio'] == "09:05" && $course['ora_fine'] == "11:00"){ 
                         if($primo){
                           echo "<p>Corsi per la prima metà giornata (09:05, 11:00)</p>";
-                          echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza' checked>&nbsp".$course['descrizione']."</input><br>";
+                          echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza' checked>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                            $primo = false;
                         }else{
-                      echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza'>&nbsp".$course['descrizione']."</input><br>";
+                      echo "<input type='radio' name='corsoPrimaMezza' value='".$course['id']."' id ='corsoPrimaMezza'>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                         }
                      }
                    }
                   ?>
+                <?php endif;?>
                    </div>
                    <div id="corsiSecondaParte">
+                    <?php if(!isset($corsi) || empty($corsi)):?>
+                 <p>Non ci sono corsi da mostrare</p>
+               <?php else:?>
                    <?php $primo = true;
                    foreach($corsi as $course){
                     if($day == 'Mercoledì'){
                           if($course['ora_inizio'] == "11:10" && $course['ora_fine'] == "12:30"){
                           if($primo){
                             echo "<p>Corsi per la seconda metà giornata (11:10, 12:30)</p>";
-                            echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza' checked>&nbsp".$course['descrizione']."</input><br>";
+                            echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza' checked>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                             $primo = false;
                           }else{
-                         echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza'>&nbsp".$course['descrizione']."</input><br>";
+                         echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza'>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                         }
                       }
                         }else if($course['ora_inizio'] == "11:10" && $course['ora_fine'] == "12:50"){
                             if($primo){
                                echo "<p>Corsi per la seconda metà giornata (11:10, 12.50)</p>";
-                               echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza' checked>&nbsp".$course['descrizione']."</input><br>";
+                               echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza' checked>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                                $primo = false;
                             }else{
-                             echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza'>&nbsp".$course['descrizione']."</input><br>";
+                             echo "<input type='radio' name='corsoSecondaMezza' value='".$course['id']."' id ='corsoSecondaMezza'>&nbsp".stripslashes($course['descrizione'])."</input><br>";
                             }
                           }
                    }?>
+                 <?php endif;?>
                    </div>
-                  <br><button type="submit" class="btn btn-success">Prossimo</button>
+                  <br>
+                  <button type="submit" class="btn btn-success">Prossimo</button>
             </form>
 </div>
       </div>

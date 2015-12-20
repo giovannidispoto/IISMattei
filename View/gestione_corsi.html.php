@@ -332,7 +332,7 @@
                           if((document.getElementById('inputNuovoPassword2Relatore').value.trim()).length > 0){
                              if((document.getElementById('inputAula').value.trim()).length > 0){
                               if((document.getElementById('inputData').value.trim())){
-                                 if(isNaN(document.getElementById('inputAula').value.trim())){
+                                 if((document.getElementById('inputAula').value.trim()).length == 0){
                                     document.getElementById('inputData').value = "";
                                     document.getElementById('erroreAula').style.display="";
                                     return false;

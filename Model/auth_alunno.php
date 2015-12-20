@@ -4,11 +4,10 @@
   include 'Helpers/helpers.php';
 
             $cod_matricola = intval($_POST['cod_matricola']) or die("Errore! il codice matricola è un intero");
-            $nome = htmlspecialchars($_POST['nome'],ENT_QUOTES,"utf-8");
-            $nome = escape_string($nome);
-            $cognome = htmlspecialchars($_POST['cognome'],ENT_QUOTES,"utf-8");
-            $cognome = escape_string($cognome);
-
+            //$nome = htmlspecialchars($_POST['nome'],ENT_QUOTES,"utf-8");
+            $nome = stripslashes(addslashes($_POST['nome']));
+            //$cognome = htmlspecialchars($_POST['cognome'],ENT_QUOTES,"utf-8");
+            $cognome = stripslashes(addslashes($_POST['cognome']));
             $db = new Database();
             $db->connect();
             $response = $db->authAlunno($cod_matricola,$nome,$cognome);

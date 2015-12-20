@@ -54,7 +54,7 @@
     <div class="jumbotron">
       <div class="container" >
       <h1>Corso creato con successo!</h1>
-      <p> Il corso <b>" <?php echo $descrizione?>"</b> è stato creato con successo</p>
+      <p> Il corso <b>" <?php echo stripslashes($descrizione)?>"</b> è stato creato con successo</p>
       <br>
       <button type="button" onclick=" location.href='index.php' " class="btn btn-primary">Torna indietro</button>
       </div>

@@ -28,7 +28,7 @@
 		
 
 
-			$aula = intval($_POST['aula']) or die("L'aula è numerica!<br> Qualcosa è andato storto!");
+			$aula = stripslashes(addslashes($_POST['aula']));
 			$max_iscritti = intval($_POST['max_iscritti']) or die("il numero max di iscritti è numerico <br> Qualcosa è andato storto!");
 			$data = htmlspecialchars($_POST['data'],ENT_QUOTES,"utf-8");
 			$data = escape_string($data);

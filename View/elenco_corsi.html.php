@@ -65,6 +65,9 @@
       <br>
       <br>
       <table class="table table-striped">
+      <?php if(empty($result)):?>
+      	<p> Non ci sono corsi da mostrare </p>
+      <?php else:?>
         <tr>
             <td><b>Corso </b></td>
             <td><b> Relatore</b></td>
@@ -76,15 +79,15 @@
         </tr>
       <?php foreach($result as $corso):?>
         <tr>
-          <td><?php echo $corso['descrizione'];?></td>
-          <td><?php echo $corso['username_relatore'];?></td>
+          <td><?php echo stripslashes($corso['descrizione']);?></td>
+          <td><?php echo stripslashes($corso['username_relatore']);?></td>
           <td><?php echo $corso['aula'];?></td>
           <td><?php echo changeFormatDate($corso['data']);?></td>
           <td><?php echo dropSeconds($corso['ora_inizio']);?></td>
           <td><?php echo dropSeconds($corso['ora_fine']);?></td>
          <td><input type="button" style=""value="elimina" onclick="location.href='index.php?course=delete&delete=<?php echo $corso['id_corso']?>'" class="btn btn-primary"></td>
       </tr>
-      <?php endforeach;?>
+      <?php endforeach;endif;?>
       </table>
       </div>
       </div>

@@ -87,7 +87,6 @@
           </div>
             <input type="text" placeholder="username" name="username" id="usernameAmm" class="form-control"><br><br>
             <input type="password" placeholder="Password" name="password" id="passwordAmm" class="form-control"><br><br>
-            <input type="hidden" name="token" value="<?php echo $token?>">
           <button type="submit" class="btn btn-success" onClick="return controllo('amm');">Entra</button>
           <div style="float:right">
           <input type="button" onClick="cambia('alu');" value="Sei un alunno?" class="btn btn-success">
@@ -105,7 +104,6 @@
           </div>
             <input type="text" placeholder="username" name="username" id="username" class="form-control"><br><br>
             <input type="password" placeholder="Password" name="password" id="password" class="form-control"><br><br>
-            <input type="hidden" name="token" value="<?php echo $token?>">
           <button type="submit" class="btn btn-success" onClick="return controllo('rel');">Entra</button>
           <div style="float:right">
           <input type="button" onClick="cambia('alu');" value="Sei un alunno?" class="btn btn-success">

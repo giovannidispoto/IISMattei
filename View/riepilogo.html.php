@@ -53,7 +53,7 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container" >
-      <h1>Ciao, <?php echo "$nome $cognome";?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
+      <h1>Ciao, <?php echo stripslashes($nome)." ".stripslashes($cognome);?> <input type="button" value="logout" onClick ="location.href='index.php?logout'" class="btn btn-warning"></h1>
       <p>Ecco i corsi a cui sei iscritto:</p>
      
                <?php $primo = true;
@@ -72,8 +72,8 @@
                 }
                 if ($corso['data'] == '2015-12-21'){
                                   echo "<tr>";
-                                    echo "<td>".$corso['descrizione']."</td>";
-                                    echo "<td>".$corso['nome']." ".$corso['cognome']."</td>";
+                                    echo "<td>".stripslashes($corso['descrizione'])."</td>";
+                                    echo "<td>".stripslashes($corso['nome'])." ".stripslashes($corso['cognome'])."</td>";
                                     echo "<td>".$corso['ora_inizio']."</td>";
                                     echo "<td>".$corso['ora_fine']."</td>";
                                     echo "<td>".$corso['aula']."</td>";
@@ -97,8 +97,8 @@
                 }
                 if ($corso['data'] == '2015-12-22'){
                                    echo "<tr>";
-                                    echo "<td>".$corso['descrizione']."</td>";
-                                    echo "<td>".$corso['nome']." ".$corso['cognome']."</td>";
+                                    echo "<td>".stripslashes($corso['descrizione'])."</td>";
+                                    echo "<td>".stripslashes($corso['nome'])." ".stripslashes($corso['cognome'])."</td>";
                                     echo "<td>".$corso['ora_inizio']."</td>";
                                     echo "<td>".$corso['ora_fine']."</td>";
                                     echo "<td>".$corso['aula']."</td>";
@@ -123,8 +123,8 @@
                 }
                 if ($corso['data'] == '2015-12-23'){
                                   echo "<tr>";
-                                    echo "<td>".$corso['descrizione']."</td>";
-                                    echo "<td>".$corso['nome']." ".$corso['cognome']."</td>";
+                                    echo "<td>".stripslashes($corso['descrizione'])."</td>";
+                                    echo "<td>".stripslashes($corso['nome'])." ".stripslashes($corso['cognome'])."</td>";
                                     echo "<td>".$corso['ora_inizio']."</td>";
                                     echo "<td>".$corso['ora_fine']."</td>";
                                     echo "<td>".$corso['aula']."</td>";

@@ -73,8 +73,8 @@
         </tr>
       <?php foreach($alunni as $alunno):?>
         <tr>
-          <td><?php echo $alunno['nome'];?></td>
-          <td><?php echo $alunno['cognome'];?></td>
+          <td><?php echo stripslashes($alunno['nome']);?></td>
+          <td><?php echo stripslashes($alunno['cognome']);?></td>
           <td><?php echo $alunno['classe'];?></td>
       </tr>
       <?php endforeach;endif;?>

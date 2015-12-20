@@ -78,8 +78,8 @@
       <?php foreach($relatori as $relatore):?>
         <tr>
           <td><?php echo $relatore['username'];?></td>
-          <td><?php echo $relatore['nome'];?></td>
-          <td><?php echo $relatore['cognome'];?></td>
+          <td><?php echo stripslashes($relatore['nome']);?></td>
+          <td><?php echo stripslashes($relatore['cognome']);?></td>
          <td><input type="button" style=""value="elimina" onclick="location.href='index.php?elenco=relatori&delete=<?php echo $relatore['username']?>'" class="btn btn-primary"></td>
       </tr>
       <?php endforeach;endif;?>

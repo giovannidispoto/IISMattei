@@ -42,6 +42,7 @@
         case 0:
         case 1:
         case 2:
+                if(isset($courses) && !empty($courses)){
                  foreach($courses as $course){
                         if($db->corsoPieno($course['id'])){
                              continue;
@@ -55,6 +56,7 @@
                                             );
                         }
                     }
+                }
                     break;
            
           }
